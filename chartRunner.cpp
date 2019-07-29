@@ -3,8 +3,22 @@
 using namespace std;
 
 int main(int argc, char *argv[]) {
-    for (int i = argc - 1; i >= 0; i--) {
-        cout << argv[i] << "\n";
+
+    bool dataInc = false;
+
+    for (int i = 1; i < argc; i++) {
+        if ( argv[i] == string("-d")) {
+            dataInc = true;
+        }
+        else {
+            if ( dataInc == true ) {
+                cout << "data:" << argv[i] << endl;
+            }
+            else {
+                cout << argv[i] << endl;
+            }
+            dataInc = false;
+        }
     }
 }
 
