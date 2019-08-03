@@ -29,6 +29,11 @@ int main(int argc, char *argv[]) {
         //     }
         //     dataInc = false;
         // }
+
+
+        //-==================================================
+        //   Records the data type in the chartType variable
+        //===================================================
         if ( argv[i] == string("-t")) {
             typeInc = true;
         }
@@ -40,7 +45,7 @@ int main(int argc, char *argv[]) {
                     cout << "Only one type is supported." << endl;
                     exit (EXIT_FAILURE);
                 }
-                cout << "type:" << argv[i] << endl;
+                string chartType = argv[i]; 
                 typeCount++;
             }
             else if ( typeCount == 0 && plus == argc ) {
