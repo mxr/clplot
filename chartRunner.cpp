@@ -10,6 +10,8 @@ int main(int argc, char *argv[]) {
     int dataCount;
     int typeCount;
 
+    string chartType;
+
     for (int i = 1; i < argc; i++) {
         // if ( argv[i] == string("-d")) {
         //     dataInc = true;
@@ -42,18 +44,19 @@ int main(int argc, char *argv[]) {
 
             if (typeInc) {
                 if ( typeCount == 1 ) {
-                    cout << "Only one type is supported." << endl;
+                    std::cout << "chart: ERROR: Only one chart type may be specified." << endl;
                     exit (EXIT_FAILURE);
                 }
-                string chartType = argv[i]; 
+                chartType = argv[i]; 
                 typeCount++;
             }
             else if ( typeCount == 0 && plus == argc ) {
-                cout << "type: default" << endl;
+                chartType = "default";
             }
             typeInc = false;
         }
     }
+    std::cout << "Chart type:" << chartType << endl;
 }
 
 
