@@ -58,12 +58,14 @@ int main(int argc, char *argv[]) {
         }
     }
 
-    cout << chartType << endl;
-    cout << data << endl;
-
     Chart chart;
+
     chart.addType(chartType);
-    chart.getType();
+    cout << chart.getType() << endl;
+
+    chart.addData(data);
+    chart.getData();
+
 }
 
 
