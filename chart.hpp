@@ -13,6 +13,6 @@ public:
     string getType();
 
     void addData(string data);
-    void getData();
+    vector<float> getData();
 
 };
