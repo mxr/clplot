@@ -1,4 +1,4 @@
-#include "chart.hpp"
+#include "../include/chart.hpp"
 #include <iostream>
 #include <string>
 

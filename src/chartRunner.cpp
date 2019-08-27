@@ -1,5 +1,5 @@
 #include <iostream>
-#include "chart.hpp"
+#include "../include/chart.hpp"
 
 using namespace std;
 
