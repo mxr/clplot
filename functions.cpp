@@ -24,19 +24,41 @@ void Chart::addData(string newData) {
 
     int iterCount = (size + 1);
         
-    for (int i = 0; i < iterCount; i = i + 2) {
-        // cout << i << endl;
-        string addstr = newStrData.substr(i, 1);
-        string::size_type sz;     // alias of size_t
-        float addFloat = stof(addstr, &sz);
+    string delimiter = ",";
+    size_t pos = 0;
+    string token;
+
+    while ((pos = newStrData.find(delimiter)) != string::npos) {
+        token = newStrData.substr(0, pos);
+
+        string::size_type sz;
+        float addFloat = stof(token, &sz);
         data.push_back(addFloat);
+
+        newStrData.erase(0, pos + delimiter.length());
+
+
     }
+    
+    string::size_type st;
+    float addFloatEnd = stof(newStrData, &st);
+    data.push_back(addFloatEnd);
+    // for (int i = 0; i < iterCount; i = i + 2) {
+    //     // cout << i << endl;
+
+    //     //assign the current data value to addstr
+
+    //     string::size_type sz;
+    //     float addFloat = stof(addstr, &sz);
+    //     data.push_back(addFloat);
+    // }
 }
 
-void Chart::getData() {
-    for ( int i = 0; i < data.size(); i++) {
-        cout << data[i] << " ";
+vector<float> Chart::getData() {
+    vector<float> returnV;
 
+    for ( int i = 0; i < data.size(); i++) {
+        returnV.push_back(data[i]);
     } 
-    cout << endl;
+    return returnV;
 }
