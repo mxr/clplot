@@ -12,7 +12,7 @@ int main(int argc, char *argv[]) {
     int typeCount;
 
     string chartType;
-    string data;
+    string dataStr;
 
     for (int i = 1; i < argc; i++) {
         if ( argv[i] == string("-d")) {
@@ -20,8 +20,7 @@ int main(int argc, char *argv[]) {
         }
         else {
             if (dataInc) {
-                data = argv[i];
-                string data = argv[i];
+                dataStr = argv[i];
                 if ( dataCount == 1 ){
                     cout << "Multiple data series are not supported yet. Please use a single -d flag.\n";
                     exit (EXIT_FAILURE);
@@ -59,12 +58,18 @@ int main(int argc, char *argv[]) {
     }
 
     Chart chart;
+    cout << "Chart information:\n==================\n";
 
     chart.addType(chartType);
-    cout << chart.getType() << endl;
+    cout << "Chart type: " << chart.getType() << endl;
 
-    chart.addData(data);
-    chart.getData();
+    chart.addData(dataStr);
+    cout << "Chart data: ";
+    vector<float> data = chart.getData();
+    for (int i = 0; i < data.size(); i++) {
+        cout << noshowpoint << data[i] << " ";
+    }
+    cout << endl;
 
 }
 
