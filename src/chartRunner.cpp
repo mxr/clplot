@@ -84,9 +84,10 @@ int main(int argc, char *argv[]) {
     cout << "Chart type: " << chart.getType() << endl;
     cout << "Chart data: ";
     vector<float> data = chart.getData();
-    for (int i = 0; i < data.size(); i++) {
-        cout << noshowpoint << data[i] << " ";
-    }
+    // for (int i = 0; i < data.size(); i++) {
+    //     cout << noshowpoint << data[i] << " ";
+    // }
+    cout << "\e[31mtest";
 
     cout << endl;
     

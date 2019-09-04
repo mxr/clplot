@@ -12,8 +12,7 @@ void Chart::addType(string newType) {
     type = newType;
 }
 
-
-void Chart::addData(string newData) {
+void Chart::addData(string newData, int lines, int cols) {
     int size = 0; 
     while (newData[size] != '\0') { 
         ++size; 
@@ -28,6 +27,7 @@ void Chart::addData(string newData) {
     size_t pos = 0;
     string token;
 
+    int dataNum = 0;
     while ((pos = newStrData.find(delimiter)) != string::npos) {
         token = newStrData.substr(0, pos);
 
@@ -37,12 +37,16 @@ void Chart::addData(string newData) {
 
         newStrData.erase(0, pos + delimiter.length());
 
-
+        dataNum++;
     }
-    
+
+    dataNum++;
     string::size_type st;
     float addFloatEnd = stof(newStrData, &st);
     data.push_back(addFloatEnd);
+
+    height = lines;
+    width = cols;
     // for (int i = 0; i < iterCount; i = i + 2) {
     //     // cout << i << endl;
 
