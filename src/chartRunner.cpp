@@ -7,10 +7,14 @@
 
 using namespace std;
 
+bool dataCheck(string data) {
+    return true;
+}
+
 int main(int argc, char *argv[]) {
 
-    bool dataInc = false;
-    bool typeInc = false;
+    bool dataSet = false;
+    bool typeSet = false;
 
     int dataCount;
     int typeCount;
@@ -24,44 +28,15 @@ int main(int argc, char *argv[]) {
 
     for (int i = 1; i < argc; i++) {
         if ( argv[i] == string("-d")) {
-            dataInc = true;
+            if (dataSet) {
+                cout << "Multiple data series is not supported yet. Call the program with only on instance of the -d flag." << endl;
+                return 1;
+            }
+            dataStr = argv[i + 1];
+            dataSet = true;
         }
-        else {
-            if (dataInc) {
-                dataStr = argv[i];
-                if ( dataCount == 1 ){
-                    cout << "Multiple data series are not supported yet. Please use a single -d flag.\n";
-                    return 1;
-                }
-                dataCount++;
-            }
-            else {
-                cout << "";
-            }
-            dataInc = false;
-        }
-
-        //-==================================================
-        //   Records the data type in the chartType variable
-        //===================================================
-        if ( argv[i] == string("-t")) {
-            typeInc = true;
-        }
-        else {
-            int plus = i + 1;
-
-            if (typeInc) {
-                if ( typeCount == 1 ) {
-                    std::cout << "chart: ERROR: Only one chart type may be specified." << endl;
-                    return 1;
-                }
-                chartType = argv[i]; 
-                typeCount++;
-            }
-            else if ( typeCount == 0 && plus == argc ) {
-                chartType = "default";
-            }
-            typeInc = false;
+        else if (argv[i] == string("-t")) {
+            chartType = argv[i + 1];
         }
     }
 
@@ -84,10 +59,10 @@ int main(int argc, char *argv[]) {
     cout << "Chart type: " << chart.getType() << endl;
     cout << "Chart data: ";
     vector<float> data = chart.getData();
-    // for (int i = 0; i < data.size(); i++) {
-    //     cout << noshowpoint << data[i] << " ";
-    // }
-    cout << "\e[31mtest";
+    for (int i = 0; i < data.size(); i++) {
+        cout << noshowpoint << data[i] << " ";
+    }
+    // cout << "\e[31mtest";
 
     cout << endl;
     
