@@ -20,5 +20,5 @@ public:
     void addData(string data, int lines, int cols);
     vector<float> getData();
 
-    void addPos(string position);
+    void winSet(int height, int width, int posX, int posY, int termHeight, int termWidth);
 };
