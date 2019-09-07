@@ -36,14 +36,14 @@ int main(int argc, char *argv[]) {
     int dataCount;
     int typeCount;
 
-    string chartType;
+    string chartType = "bar";
     string dataStr;
 
     //-==================================================
     //   Records the data series in the dataStr variable
     //===================================================
-
     for (int i = 1; i < argc; i++) {
+        
         if ( argv[i] == string("-d")) {
             if (dataSet) {
                 cout << "Multiple data series is not supported yet. Call the program with only one instance of the -d flag." << endl;
@@ -78,6 +78,10 @@ int main(int argc, char *argv[]) {
         }
     }
 
+    if ( dataStr == "" ) {
+        cout << "Data must be specified with the -d flag. See the readme for more information." << endl;
+        return 1;
+    }
     // Define the window size
     //====================
     int cols, lines;
