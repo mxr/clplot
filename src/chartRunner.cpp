@@ -28,16 +28,38 @@ bool typeCheck(string type) {
     
 }
 
+bool heightCheck(int height, int termHeight) {
+    if ( height > 5 && height <= termHeight) {
+        return true;
+        cout << height << endl;
+    }
+
+    return false;
+}
+
 int main(int argc, char *argv[]) {
 
     bool dataSet = false;
     bool typeSet = false;
+    bool widthSet = false;
+    bool heightSet = false;
 
     int dataCount;
     int typeCount;
+    int chartHeight;
+    int chartWidth;
 
     string chartType = "bar";
     string dataStr;
+
+    // Define the window size
+    //====================
+    int cols, lines;
+
+    struct ttysize ts;
+    ioctl(STDIN_FILENO, TIOCGSIZE, &ts);
+    cols = ts.ts_cols;
+    lines = ts.ts_lines;
 
     //-==================================================
     //   Records the data series in the dataStr variable
@@ -62,7 +84,7 @@ int main(int argc, char *argv[]) {
         }
         else if (argv[i] == string("-t")) {
             if (typeSet) {
-                cout << "Only one chart type can be used. Use only one instance of the -t flag." << endl;
+                cout << "chart: ERROR: Only one chart type can be used. Use only one instance of the -t flag." << endl;
                 return 1;
             }
 
@@ -70,26 +92,35 @@ int main(int argc, char *argv[]) {
                 chartType = argv[i + 1];
             }
             else {
-                cout << "\"" << argv[i+1] << "\"" << " is not a recognized chart type." << endl;
+                cout << "chart: ERROR: \"" << argv[i+1] << "\"" << " is not a recognized chart type." << endl;
                 return 1;
             }
             
             typeSet = true;
         }
+        else if (argv[i] == string("-h")) {
+            if (heightSet) {
+                cout << "Height can only be set once" << endl;
+                return 1;
+            }
+
+            if (heightCheck(stoi(argv[i + 1]), lines)) {
+                chartHeight = stoi(argv[i + 1]);
+            }
+            else {
+                cout << "chart: ERROR: The height must be an integer number of lines between 5 and the terminal height," << lines << "." << endl;
+                return 1;
+            }
+            
+            heightSet = true;
+        }
+
     }
 
     if ( dataStr == "" ) {
         cout << "Data must be specified with the -d flag. See the readme for more information." << endl;
         return 1;
     }
-    // Define the window size
-    //====================
-    int cols, lines;
-
-    struct ttysize ts;
-    ioctl(STDIN_FILENO, TIOCGSIZE, &ts);
-    cols = ts.ts_cols;
-    lines = ts.ts_lines;
 
     // Create chart object
     //====================
