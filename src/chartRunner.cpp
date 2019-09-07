@@ -11,6 +11,15 @@ bool dataCheck(string data) {
     return true;
 }
 
+bool typeCheck(string type) {
+    vector<string> dataTypes = {"line", "bar"};
+    if (find(dataTypes.begin(), dataTypes.end(), type) != dataTypes.end()) {
+        return true;
+    }
+    return false;
+    
+}
+
 int main(int argc, char *argv[]) {
 
     bool dataSet = false;
@@ -36,7 +45,12 @@ int main(int argc, char *argv[]) {
             dataSet = true;
         }
         else if (argv[i] == string("-t")) {
-            chartType = argv[i + 1];
+            if (dataSet) {
+                cout << "Multiple data series is not supported yet. Call the program with only on instance of the -d flag." << endl;
+                return 1;
+            }
+            dataStr = argv[i + 1];
+            dataSet = true;
         }
     }
 
