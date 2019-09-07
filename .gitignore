@@ -1,16 +1,5 @@
-# Ignore all
-*
-
-# Unignore all with extensions
-!*.*
-
-# Unignore all dirs
-!*/
+# ignore ds_store
+.DS_Store
 
 # Ignore `bin` dir
 bin/
-# or
-*/bin/*
-
-# Ignore DS_Store
-.DS_Store
