@@ -7,8 +7,8 @@ class Chart {
 
   int width;
   int height;
-  int topCoordY;
-  int topCoordX;
+  int posY;
+  int posX;
 
   string type;
   vector<float> data;
