@@ -68,7 +68,7 @@ int main(int argc, char *argv[]) {
         
         if ( argv[i] == string("-d")) {
             if (dataSet) {
-                cout << "Multiple data series is not supported yet. Call the program with only one instance of the -d flag." << endl;
+                cout << "chart: ERROR: Multiple data series is not supported yet. Call the program with only one instance of the -d flag." << endl;
                 return 1;
             }
             
@@ -76,7 +76,7 @@ int main(int argc, char *argv[]) {
                 dataStr = argv[i + 1];
             }
             else {
-                cout << "\"" << argv[i+1] << "\"" << " is not in the correct data format." << endl;
+                cout << "chart: ERROR: \"" << argv[i+1] << "\"" << " is not in the correct data format." << endl;
                 return 1;
             }
             
