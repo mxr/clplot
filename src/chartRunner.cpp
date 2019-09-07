@@ -29,29 +29,17 @@ bool typeCheck(string type) {
 }
 
 bool heightCheck(int height, int termHeight) {
+
     if ( height > 5 && height <= termHeight) {
-        return true;
         cout << height << endl;
+        return true;
     }
 
     return false;
 }
 
 int main(int argc, char *argv[]) {
-
-    bool dataSet = false;
-    bool typeSet = false;
-    bool widthSet = false;
-    bool heightSet = false;
-
-    int dataCount;
-    int typeCount;
-    int chartHeight;
-    int chartWidth;
-
-    string chartType = "bar";
-    string dataStr;
-
+    
     // Define the window size
     //====================
     int cols, lines;
@@ -61,6 +49,24 @@ int main(int argc, char *argv[]) {
     cols = ts.ts_cols;
     lines = ts.ts_lines;
 
+
+    bool dataSet = false;
+    bool typeSet = false;
+    bool widthSet = false;
+    bool heightSet = false;
+
+    int dataCount;
+    int typeCount;
+    int chartHeight = lines;
+    int chartWidth = cols;
+    int posX = 0;
+    int posY = 0;
+
+    string chartType = "bar";
+    string dataStr;
+
+
+
     //-==================================================
     //   Records the data series in the dataStr variable
     //===================================================
@@ -68,7 +74,7 @@ int main(int argc, char *argv[]) {
         
         if ( argv[i] == string("-d")) {
             if (dataSet) {
-                cout << "chart: ERROR: Multiple data series is not supported yet. Call the program with only one instance of the -d flag." << endl;
+                cout << "chart: \e[91mERROR: \e[0mMultiple data series is not supported yet. Call the program with only one instance of the -d flag." << endl;
                 return 1;
             }
             
@@ -76,7 +82,7 @@ int main(int argc, char *argv[]) {
                 dataStr = argv[i + 1];
             }
             else {
-                cout << "chart: ERROR: \"" << argv[i+1] << "\"" << " is not in the correct data format." << endl;
+                cout << "chart: \e[91mERROR: \e[0m\"" << argv[i+1] << "\"" << " is not in the correct data format." << endl;
                 return 1;
             }
             
@@ -84,7 +90,7 @@ int main(int argc, char *argv[]) {
         }
         else if (argv[i] == string("-t")) {
             if (typeSet) {
-                cout << "chart: ERROR: Only one chart type can be used. Use only one instance of the -t flag." << endl;
+                cout << "chart: \e[91mERROR: \e[0mOnly one chart type can be used. Use only one instance of the -t flag." << endl;
                 return 1;
             }
 
@@ -92,7 +98,7 @@ int main(int argc, char *argv[]) {
                 chartType = argv[i + 1];
             }
             else {
-                cout << "chart: ERROR: \"" << argv[i+1] << "\"" << " is not a recognized chart type." << endl;
+                cout << "chart: \e[91mERROR: \e[0m\"" << argv[i+1] << "\"" << " is not a recognized chart type." << endl;
                 return 1;
             }
             
@@ -100,7 +106,7 @@ int main(int argc, char *argv[]) {
         }
         else if (argv[i] == string("-h")) {
             if (heightSet) {
-                cout << "Height can only be set once" << endl;
+                cout << "chart: \e[91mERROR: \e[0mHeight can only be set once" << endl;
                 return 1;
             }
 
@@ -108,7 +114,7 @@ int main(int argc, char *argv[]) {
                 chartHeight = stoi(argv[i + 1]);
             }
             else {
-                cout << "chart: ERROR: The height must be an integer number of lines between 5 and the terminal height," << lines << "." << endl;
+                cout << "chart: \e[91mERROR: \e[0mThe height must be an integer number of lines between 5 and the terminal height, " << lines << "." << endl;
                 return 1;
             }
             
@@ -118,7 +124,7 @@ int main(int argc, char *argv[]) {
     }
 
     if ( dataStr == "" ) {
-        cout << "Data must be specified with the -d flag. See the readme for more information." << endl;
+        cout << "chart: \e[91mERROR: \e[0mData must be passed to chart with the -d flag. See the readme for more information." << endl;
         return 1;
     }
 
@@ -128,6 +134,8 @@ int main(int argc, char *argv[]) {
 
     chart.addType(chartType);
     chart.addData(dataStr, lines, cols);
+    // chart.addSize(chartHeight, chartWidth, chartPosX, chartPosY);
+
 
     cout << "Chart type: " << chart.getType() << endl;
     cout << "Chart data: ";
@@ -135,7 +143,7 @@ int main(int argc, char *argv[]) {
     for (int i = 0; i < data.size(); i++) {
         cout << noshowpoint << data[i] << " ";
     }
-    // cout << "\e[31mtest";
+    // cout << "\e[91mtest";
 
     cout << endl;
     
