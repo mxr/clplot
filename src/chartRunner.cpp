@@ -37,9 +37,9 @@ void chartTypes() {
     cout << dataTypes[dataTypes.size() - 1] << endl;
 }
 
-bool heightCheck(int height, int termHeight) {
+bool sizeCheck(int height, int termHeight, int min) {
 
-    if ( height > 5 && height <= termHeight) {
+    if ( height > min && height <= termHeight) {
         // cout << height << endl;
         return true;
     }
@@ -71,7 +71,7 @@ int main(int argc, char *argv[]) {
     int posX = 0;
     int posY = 0;
 
-    string chartType = "bar";
+    string chartType = "line";
     string dataStr;
 
 
@@ -120,7 +120,7 @@ int main(int argc, char *argv[]) {
                 return 1;
             }
 
-            if (heightCheck(stoi(argv[i + 1]), lines)) {
+            if (sizeCheck(stoi(argv[i + 1]), lines, 5)) {
                 chartHeight = stoi(argv[i + 1]);
             }
             else {
@@ -129,6 +129,22 @@ int main(int argc, char *argv[]) {
             }
             
             heightSet = true;
+        }
+        else if (argv[i] == string("-w")) {
+            if (widthSet) {
+                cout << "chart: \e[91merror: \e[0mWidth can only be set once" << endl;
+                return 1;
+            }
+
+            if (sizeCheck(stoi(argv[i + 1]), cols, 8)) {
+                chartWidth = stoi(argv[i + 1]);
+            }
+            else {
+                cout << "chart: \e[91merror: \e[0mThe width must be an integer number of rows between 8 and the terminal width, " << cols << "." << endl;
+                return 1;
+            }
+            
+            widthSet = true;
         }
 
     }
