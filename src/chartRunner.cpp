@@ -4,19 +4,27 @@
 #include <sys/ioctl.h>
 #include <stdio.h>
 #include <unistd.h>
+#include <vector>
 
 using namespace std;
 
-bool dataCheck(string data) {
+bool dataCheck(string dataStr) {
+
+    string b1 = dataStr.substr(0,1);
+    string b2 =  dataStr.substr(dataStr.length() - 1,1);
+
+    if ( b1 != "[" || b2 != "]") {
+        return false;
+    }
     return true;
 }
 
 bool typeCheck(string type) {
-    vector<string> dataTypes = {"line", "bar"};
-    if (find(dataTypes.begin(), dataTypes.end(), type) != dataTypes.end()) {
-        return true;
-    }
-    return false;
+    // vector<string> dataTypes = { "line", "bar" };
+    // if (find(dataTypes.begin(), dataTypes.end(), type) != dataTypes.end()) {
+    //     return true;
+    // }
+    return true;
     
 }
 
@@ -38,19 +46,35 @@ int main(int argc, char *argv[]) {
     for (int i = 1; i < argc; i++) {
         if ( argv[i] == string("-d")) {
             if (dataSet) {
-                cout << "Multiple data series is not supported yet. Call the program with only on instance of the -d flag." << endl;
+                cout << "Multiple data series is not supported yet. Call the program with only one instance of the -d flag." << endl;
                 return 1;
             }
-            dataStr = argv[i + 1];
+            
+            if (dataCheck(argv[i+1])) {
+                dataStr = argv[i + 1];
+            }
+            else {
+                cout << "\"" << argv[i+1] << "\"" << " is not in the correct data format." << endl;
+                return 1;
+            }
+            
             dataSet = true;
         }
         else if (argv[i] == string("-t")) {
-            if (dataSet) {
-                cout << "Multiple data series is not supported yet. Call the program with only on instance of the -d flag." << endl;
+            if (typeSet) {
+                cout << "Only one chart type can be used. Use only one instance of the -t flag." << endl;
                 return 1;
             }
-            dataStr = argv[i + 1];
-            dataSet = true;
+
+            if (typeCheck(argv[i+1])) {
+                chartType = argv[i + 1];
+            }
+            else {
+                cout << "\"" << argv[i+1] << "\"" << " is not a recognized chart type." << endl;
+                return 1;
+            }
+            
+            typeSet = true;
         }
     }
 
