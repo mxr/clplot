@@ -66,3 +66,12 @@ vector<float> Chart::getData() {
     } 
     return returnV;
 }
+
+void winSet(int height, int width, int posX, int posY, int termHeight, int termWidth){
+    // height will be lt termheight
+
+    if ( height + posY > termHeight || width + posX > termWidth) {
+        cout << "chart: \e[31merror: The chart size and position are greater than the terminal window.";
+        return;
+    }
+}
