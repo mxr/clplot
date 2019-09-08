@@ -1,10 +1,11 @@
 #include <iostream>
 #include "../include/chart.hpp"
-// #include <ncurses.h>
 #include <sys/ioctl.h>
 #include <stdio.h>
 #include <unistd.h>
 #include <vector>
+#include <sstream> 
+// #include <algorithm>
 
 using namespace std;
 
@@ -47,6 +48,42 @@ bool sizeCheck(int height, int termHeight, int min) {
     return false;
 }
 
+inline bool isInteger(const string & s) {
+    if (s.empty() || ((!isdigit(s[0])) && (s[0] != '-') && (s[0] != '+'))) {
+        return false;
+    }
+
+    char * p;
+    strtol(s.c_str(), &p, 10);
+
+    return (*p == 0);
+}
+
+
+bool posCheck(string data) {
+    size_t commaCount = count(data.begin(), data.end(), ',');
+
+    if ( commaCount == 1 ) {
+        replace(data.begin(), data.end(), ',', ' ');
+        vector<string> positions;
+        stringstream ss(data);
+        string temp;
+
+        while (ss >> temp) 
+            positions.push_back(temp);
+
+        if (positions.size() == 2 && isInteger(positions[0]) && isInteger(positions[1])) {
+            return true;
+        }
+    }
+    
+    return false;
+    // int posX = positions[0];
+    // int posY = positions[1];
+    
+    // return true;
+}
+
 int main(int argc, char *argv[]) {
     
     // Define the window size
@@ -63,6 +100,7 @@ int main(int argc, char *argv[]) {
     bool typeSet = false;
     bool widthSet = false;
     bool heightSet = false;
+    bool posSet = false;
 
     int dataCount;
     int typeCount;
@@ -146,6 +184,35 @@ int main(int argc, char *argv[]) {
             
             widthSet = true;
         }
+        else if (argv[i] == string("-p")) {
+            if (posSet) {
+                cout << "chart: \e[91merror: \e[0mWidth can only be set once" << endl;
+                return 1;
+            }
+
+            if (posCheck(argv[i+1])) {
+
+                    string posString = argv[i+1];
+                    replace(posString.begin(), posString.end(), ',', ' ');
+
+                    vector<int> positions;
+                    stringstream ss(posString);
+                    int temp;
+
+                    while (ss >> temp) {
+                        positions.push_back(temp);
+                    }
+
+                    int posX = positions[0];
+                    int posY = positions[1];
+            }
+            else {
+                cout << "chart: \e[91merror: \e[0m\"\e[93m" << argv[i+1] << "\e[0m\" is an invalid position. Position must in the format \"\e[93mx,y\e[0m\"." << endl;
+                return 1;
+            }
+            
+            posSet = true;
+        }
 
     }
 
@@ -161,6 +228,8 @@ int main(int argc, char *argv[]) {
     chart.addType(chartType);
     chart.addData(dataStr, lines, cols);
     // chart.addSize(chartHeight, chartWidth, chartPosX, chartPosY);
+
+    chart.winSet(chartHeight, chartWidth, posX, posY, lines, cols);
 
 
     cout << "Chart type: " << chart.getType() << endl;
