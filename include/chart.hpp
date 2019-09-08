@@ -2,9 +2,10 @@
 #include <vector>
 
 using namespace std;
-
+    
 class Chart {
 
+  vector<char> lineChars = {'l', 'r', 'u', 'd'};
   int width;
   int height;
   int posY;
@@ -12,6 +13,8 @@ class Chart {
 
   string type;
   vector<float> data;
+
+  vector<vector<const char *> > window;
 
 public:
     void addType(string type);
