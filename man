@@ -1,0 +1,16 @@
+\e[1mCLPLOT(1)\e[0m
+
+\e[1mNAME\e[0m
+    clplot - an ascii chart generator for the terminal.
+
+\e[1mSYNOPSIS\e[0m
+    \e[1mclplot\e[0m [-d \e[4mDATA\e[0m] [-t \e[4mTYPE\e[0m] \e[4mfile...\e[0m
+
+\e[1mDESCRIPTION\e[0m
+    \e[1mclplot\e[0m generates ascii plots for given data.
+
+\e[1mOPTIONS\e[0m
+    -n, --bits=BITS
+        Set the number of bits to modify. Default is one bit.
+
+\e[1mCLPLOT(1)\e[0m
