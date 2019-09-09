@@ -239,6 +239,8 @@ int main(int argc, char *argv[]) {
     chart.winSet(chartHeight, chartWidth, posX, posY, lines, cols);
 
     chart.draw(lines,cols);
+
+    chart.dataDraw();
 }
 
 

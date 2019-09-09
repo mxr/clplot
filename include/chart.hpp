@@ -4,13 +4,18 @@
 using namespace std;
     
 class Chart {
-
   vector<string> lineChars = { "╭", "╮", "╰", "╯", "│", "─" };
+
+  // vector<string> lineChars = { "╔", "╖", "╙", "╝", "║", "═" };
+
   int width;
   int height;
   int posY;
   int posX;
 
+  int chartCharWidth;
+  int chartCharHeight;
+  
   string type;
   vector<float> data;
 
@@ -26,4 +31,6 @@ public:
     void winSet(int height, int width, int posX, int posY, int termHeight, int termWidth);
 
     void draw(int termHeight, int termWidth);
+
+    void dataDraw();
 };

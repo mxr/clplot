@@ -73,12 +73,15 @@ void Chart::winSet(int height, int width, int posX, int posY, int termHeight, in
     // cout << "chart height: " << height << endl;
     // cout << "position y: " << posY << endl;
 
-    if ( height + posY > termHeight) {
+    chartCharHeight = height;
+    chartCharWidth = width;
+
+    if ( height + posY + 1 > termHeight) {
         cout << "chart: \e[31merror:\e[0m The sum of the chart height (\e[93m" << height << "\e[0m) and vertical position (\e[93m" << posY <<  "\e[0m) is greater than the terminal height (\e[93m" << termHeight << "\e[0m)." << endl;
         exit(1);
     }
-    else if ( width + posX + 1 > termWidth) {
-        cout << "chart: \e[31merror:\e[0m The sum of the chart width (\e[93m" << width + 1 << "\e[0m) and horizontal position (\e[93m" << posX <<  "\e[0m) is greater than the terminal width (\e[93m" << termWidth << "\e[0m)." << endl;
+    else if ( width + posX > termWidth) {
+        cout << "chart: \e[31merror:\e[0m The sum of the chart width (\e[93m" << width << "\e[0m) and horizontal position (\e[93m" << posX <<  "\e[0m) is greater than the terminal width (\e[93m" << termWidth << "\e[0m)." << endl;
         exit(1);
     }
     else {
@@ -87,9 +90,9 @@ void Chart::winSet(int height, int width, int posX, int posY, int termHeight, in
 
 
         vector<int> tl = { posX, posY };
-        vector<int> tr = { posX + width, posY };
+        vector<int> tr = { posX + width - 1, posY };
         vector<int> bl = { posX, posY + height - 1 };
-        vector<int> br = { posX + width, posY + height - 1 };
+        vector<int> br = { posX + width - 1, posY + height - 1 };
 
         for (int i = 0; i <= termHeight; i++) {
 
@@ -186,4 +189,23 @@ void Chart::draw(int termHeight, int termWidth) {
         }
         cout << endl;
     } 
+}
+
+void Chart::dataDraw() {
+    int horSteps = (( Chart::chartCharWidth - 2 ) * 2 ) / data.size();
+
+
+    // smallest data:
+    float min =  *( min_element( data.begin(), data.end() ) );
+    float max =  *( max_element( data.begin(), data.end() ) );
+    float range = ( max - min );
+
+    float verSteps = (Chart::chartCharHeight - 3) / range ;
+
+    for ( int x = 1; x < data.size(); x++ ) {
+        cout << data[x - 1] << " - " << data[x] << endl;
+    }
+
+    cout << verSteps << endl;
+    cout << horSteps << endl;
 }
