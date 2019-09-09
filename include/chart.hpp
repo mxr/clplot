@@ -5,7 +5,7 @@ using namespace std;
     
 class Chart {
 
-  vector<char> lineChars = {'l', 'r', 'u', 'd'};
+  vector<string> lineChars = { "╭", "╮", "╰", "╯", "│", "─" };
   int width;
   int height;
   int posY;
@@ -14,7 +14,7 @@ class Chart {
   string type;
   vector<float> data;
 
-  vector<vector<const char *> > window;
+  vector<vector<string> > window;
 
 public:
     void addType(string type);
