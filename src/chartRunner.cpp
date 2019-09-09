@@ -100,10 +100,10 @@ int main(int argc, char *argv[]) {
 
     int dataCount;
     int typeCount;
-    int chartHeight = lines;
-    int chartWidth = cols;
+    int chartHeight = lines - 2;
+    int chartWidth = cols - 1;
     int posX = 0;
-    int posY = 0;
+    int posY = 1;
 
     string chartType = "line";
     string dataStr;
@@ -226,9 +226,6 @@ int main(int argc, char *argv[]) {
     chart.addData(dataStr, lines, cols);
     // chart.addSize(chartHeight, chartWidth, chartPosX, chartPosY);
 
-    chart.winSet(chartHeight, chartWidth, posX, posY, lines, cols);
-
-
     cout << "Chart type: " << chart.getType() << endl;
     cout << "Chart data: ";
     vector<float> data = chart.getData();
@@ -238,7 +235,9 @@ int main(int argc, char *argv[]) {
     // cout << "\e[91mtest";
 
     cout << endl;
-    
+
+    chart.winSet(chartHeight, chartWidth, posX, posY, lines, cols);
+
 }
 
 
