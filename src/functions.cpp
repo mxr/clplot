@@ -87,57 +87,94 @@ void Chart::winSet(int height, int width, int posX, int posY, int termHeight, in
 
         // Chart::window[1][2] = "gi";
 
-        cout << window.size() << endl;
-
         vector<int> tl = { posX, posY };
         vector<int> tr = { posX + width, posY };
         vector<int> bl = { posX, posY + height };
         vector<int> br = { posX + width, posY + height };
 
-
-        for (int i = 0; i < termHeight; i++) {
+        for (int i = 0; i <= termHeight; i++) {
             vector<string> row; // Create an empty row
 
-            if ( i == 0 ) {
+            if ( i < tl[1] ) {
+                //===========================================
+                // If the current row is above the start row of 
+                // the chart, then add a blank row to the screen.
+                //===========================================
 
-                row.push_back(lineChars[0]);
-                for ( int x = 0; x < termWidth - 2; x++)
-                    row.push_back(lineChars[5]);
-                row.push_back(lineChars[1]);
-
+                for ( int j = 0; j <= termWidth; j++) {
+                    row.push_back(" ");
+                }
             }
-            else if ( i == height - 1 ) {
 
-                row.push_back(lineChars[2]);
-                for ( int x = 0; x < termWidth - 2; x++)
-                    row.push_back(lineChars[5]);
-                row.push_back(lineChars[3]);
+            else if ( i == tl[1] ) {
+                for ( int j = 0; j <= tr[0]; j++ ) {
+                    if ( j == tl[0] ) {
+                        row.push_back(lineChars[0]);
+                    }
+                    else if ( j == tr[0]) {
+                        row.push_back(lineChars[1]);
+                    }
+                    else {
+                        row.push_back(lineChars[6]);
+                    }
+                }
+            }
+            else if ( i > tl[1] && i < bl[1] ) {
+                // for ( int j = 0; j <= termWidth; j++) {
+                //     row.push_back(" ");
+                // }
+            }
+            else if ( i == bl[1] ) {
 
             }
             else {
-                row.push_back(lineChars[4]);
-                for ( int x = 0; x < termWidth - 2; x++)
+                //========================================
+                // The current row is below the chart 
+                // content so add a blank row to the screen.
+                //========================================
+
+                for ( int j = 0; j <= termWidth; j++) {
                     row.push_back(" ");
-                row.push_back(lineChars[4]);    
+                }
             }
+            // cout << br[0] << ", " << br[1] << endl;
+            // if ( i == 0 ) {
+
+            //     row.push_back(lineChars[0]);
+            //     for ( int x = 0; x < termWidth - 2; x++)
+            //         row.push_back(lineChars[5]);
+            //     row.push_back(lineChars[1]);
+
+            // }
+            // else if ( i == height - 1 ) {
+
+            //     row.push_back(lineChars[2]);
+            //     for ( int x = 0; x < termWidth - 2; x++)
+            //         row.push_back(lineChars[5]);
+            //     row.push_back(lineChars[3]);
+
+            // }
+            // else {
+            //     row.push_back(lineChars[4]);
+            //     for ( int x = 0; x < termWidth - 2; x++)
+            //         row.push_back(" ");
+            //     row.push_back(lineChars[4]);    
+            // }
 
             window.push_back(row);
-
-
-            // for (int j = 0; j < width; j++) {
-            //     row.push_back(i * j); // Add an element (column) to the row
-            // }
-            // vec.push_back(row); // Add the row to the main vector
-            // // create a vector row then push this vector to the vector of vectors.
         }
 
-        for ( int j = 0; j < termHeight; j++ ) {
-            for ( int k = 0; k < termWidth; k++ ) {
-                cout << window[j][k];
-                // cout << j << k;
-            }
-            cout << endl;
-        } 
+        //===========================
+        // Print the window
+        //===========================
+
+        // for ( int j = 0; j < termHeight; j++ ) {
+        //     for ( int k = 0; k < termWidth; k++ ) {
+        //         cout << window[j][k];
+        //         // cout << j << k;
+        //     }
+        //     cout << endl;
+        // } 
 
     }
 }
