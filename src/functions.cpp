@@ -107,25 +107,55 @@ void Chart::winSet(int height, int width, int posX, int posY, int termHeight, in
             }
 
             else if ( i == tl[1] ) {
-                for ( int j = 0; j <= tr[0]; j++ ) {
+                //========================================
+                // The current row is the top chart row
+                //========================================
+                for ( int j = 0; j <= termWidth; j++ ) {
                     if ( j == tl[0] ) {
                         row.push_back(lineChars[0]);
                     }
                     else if ( j == tr[0]) {
                         row.push_back(lineChars[1]);
                     }
+                    else if ( j > tl[0] && j < tr[0] ){
+                        row.push_back(lineChars[5]);
+                    }
                     else {
-                        row.push_back(lineChars[6]);
+                        row.push_back(" ");
                     }
                 }
             }
             else if ( i > tl[1] && i < bl[1] ) {
-                // for ( int j = 0; j <= termWidth; j++) {
-                //     row.push_back(" ");
-                // }
+                //================================================
+                // The current row is chart cont between top/bottom
+                //================================================
+                for ( int j = 0; j <= termWidth; j++) {
+                    if ( j == tl[0] || j == tr[0] ) {
+                        row.push_back(lineChars[4]);
+                    }
+                    else {
+                        row.push_back(" ");
+                    }
+                }
             }
             else if ( i == bl[1] ) {
-
+                //====================================
+                // The current row is the bottom row
+                //===================================
+                for ( int j = 0; j <= termWidth; j++ ) {
+                    if ( j == tl[0] ) {
+                        row.push_back(lineChars[2]);
+                    }
+                    else if ( j == tr[0]) {
+                        row.push_back(lineChars[3]);
+                    }
+                    else if ( j > tl[0] && j < tr[0] ){
+                        row.push_back(lineChars[5]);
+                    }
+                    else {
+                        row.push_back(" ");
+                    }
+                }
             }
             else {
                 //========================================
@@ -168,13 +198,13 @@ void Chart::winSet(int height, int width, int posX, int posY, int termHeight, in
         // Print the window
         //===========================
 
-        // for ( int j = 0; j < termHeight; j++ ) {
-        //     for ( int k = 0; k < termWidth; k++ ) {
-        //         cout << window[j][k];
-        //         // cout << j << k;
-        //     }
-        //     cout << endl;
-        // } 
+        for ( int j = 0; j < termHeight; j++ ) {
+            for ( int k = 0; k < termWidth; k++ ) {
+                cout << window[j][k];
+                // cout << j << k;
+            }
+            cout << endl;
+        } 
 
     }
 }
