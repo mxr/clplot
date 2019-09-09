@@ -89,20 +89,55 @@ void Chart::winSet(int height, int width, int posX, int posY, int termHeight, in
 
         cout << window.size() << endl;
 
-        
-        for (int i = 0; i < 10; i++) {
-            vector<int> row; // Create an empty row
-            for (int j = 0; j < 20; j++) {
-                row.push_back(i * j); // Add an element (column) to the row
+        vector<int> tl = { posX, posY };
+        vector<int> tr = { posX + width, posY };
+        vector<int> bl = { posX, posY + height };
+        vector<int> br = { posX + width, posY + height };
+
+
+        for (int i = 0; i < termHeight; i++) {
+            vector<string> row; // Create an empty row
+
+            if ( i == 0 ) {
+
+                row.push_back(lineChars[0]);
+                for ( int x = 0; x < termWidth - 2; x++)
+                    row.push_back(lineChars[5]);
+                row.push_back(lineChars[1]);
+
             }
-            vec.push_back(row); // Add the row to the main vector
-            // create a vector row then push this vector to the vector of vectors.
+            else if ( i == height - 1 ) {
+
+                row.push_back(lineChars[2]);
+                for ( int x = 0; x < termWidth - 2; x++)
+                    row.push_back(lineChars[5]);
+                row.push_back(lineChars[3]);
+
+            }
+            else {
+                row.push_back(lineChars[4]);
+                for ( int x = 0; x < termWidth - 2; x++)
+                    row.push_back(" ");
+                row.push_back(lineChars[4]);    
+            }
+
+            window.push_back(row);
+
+
+            // for (int j = 0; j < width; j++) {
+            //     row.push_back(i * j); // Add an element (column) to the row
+            // }
+            // vec.push_back(row); // Add the row to the main vector
+            // // create a vector row then push this vector to the vector of vectors.
         }
-        // chart tl = posx, posy
-        // chart tr = posx + width, posy
-        // chart bl = posx, posy + height
-        // chart br = posx + width, posy + height
- 
+
+        for ( int j = 0; j < termHeight; j++ ) {
+            for ( int k = 0; k < termWidth; k++ ) {
+                cout << window[j][k];
+                // cout << j << k;
+            }
+            cout << endl;
+        } 
 
     }
 }
