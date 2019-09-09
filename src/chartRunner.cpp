@@ -78,10 +78,6 @@ bool posCheck(string data) {
     }
     
     return false;
-    // int posX = positions[0];
-    // int posY = positions[1];
-    
-    // return true;
 }
 
 int main(int argc, char *argv[]) {
@@ -121,7 +117,7 @@ int main(int argc, char *argv[]) {
         
         if ( argv[i] == string("-d")) {
             if (dataSet) {
-                cout << "chart: \e[91merror: \e[0mMultiple data series is not supported yet. Call the program with only one instance of the -d flag." << endl;
+                cout << "chart: \e[91merror: \e[0mMultiple data series is not supported yet. Call the program with only one instance of the \e[93m-d\e0m flag." << endl;
                 return 1;
             }
             
@@ -129,7 +125,7 @@ int main(int argc, char *argv[]) {
                 dataStr = argv[i + 1];
             }
             else {
-                cout << "chart: \e[91merror: \e[0m\"" << argv[i+1] << "\"" << " is not in the correct data format." << endl;
+                cout << "chart: \e[91merror: \e[0mThe data \"\e[93m" << argv[i+1] << "\e[0m\"" << " is not in the correct format." << endl;
                 return 1;
             }
             
@@ -203,11 +199,12 @@ int main(int argc, char *argv[]) {
                         positions.push_back(temp);
                     }
 
-                    int posX = positions[0];
-                    int posY = positions[1];
+                    posX = positions[0];
+                    posY = positions[1];
+
             }
             else {
-                cout << "chart: \e[91merror: \e[0m\"\e[93m" << argv[i+1] << "\e[0m\" is an invalid position. Position must in the format \"\e[93mx,y\e[0m\"." << endl;
+                cout << "chart: \e[91merror: \e[0m\"\e[93m" << argv[i+1] << "\e[0m\" is an invalid position. Position must in the format \"\e[94mx,y\e[0m\"." << endl;
                 return 1;
             }
             
