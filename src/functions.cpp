@@ -85,7 +85,6 @@ void Chart::winSet(int height, int width, int posX, int posY, int termHeight, in
         cout << "Chart height: " << height << endl;
         cout << "Chart width: " << width << endl;
 
-        // Chart::window[1][2] = "gi";
 
         vector<int> tl = { posX, posY };
         vector<int> tr = { posX + width, posY };
@@ -93,7 +92,8 @@ void Chart::winSet(int height, int width, int posX, int posY, int termHeight, in
         vector<int> br = { posX + width, posY + height };
 
         for (int i = 0; i <= termHeight; i++) {
-            vector<string> row; // Create an empty row
+
+            vector<string> row;
 
             if ( i < tl[1] ) {
                 //===========================================
@@ -167,36 +167,13 @@ void Chart::winSet(int height, int width, int posX, int posY, int termHeight, in
                     row.push_back(" ");
                 }
             }
-            // cout << br[0] << ", " << br[1] << endl;
-            // if ( i == 0 ) {
-
-            //     row.push_back(lineChars[0]);
-            //     for ( int x = 0; x < termWidth - 2; x++)
-            //         row.push_back(lineChars[5]);
-            //     row.push_back(lineChars[1]);
-
-            // }
-            // else if ( i == height - 1 ) {
-
-            //     row.push_back(lineChars[2]);
-            //     for ( int x = 0; x < termWidth - 2; x++)
-            //         row.push_back(lineChars[5]);
-            //     row.push_back(lineChars[3]);
-
-            // }
-            // else {
-            //     row.push_back(lineChars[4]);
-            //     for ( int x = 0; x < termWidth - 2; x++)
-            //         row.push_back(" ");
-            //     row.push_back(lineChars[4]);    
-            // }
 
             window.push_back(row);
         }
 
-        //===========================
+        //===================
         // Print the window
-        //===========================
+        //===================
 
         for ( int j = 0; j < termHeight; j++ ) {
             for ( int k = 0; k < termWidth; k++ ) {
