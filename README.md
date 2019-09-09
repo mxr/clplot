@@ -1,7 +1,6 @@
 # clplot
 An ascii chart generator for the terminal written in C++.
 
-
 ## Installation
 
 Install with git:
@@ -9,14 +8,14 @@ Install with git:
 git clone this
 make
 make install
-./chart -d [1,2,3]
+./clplot -d [1,2,3]
 ```
 
 ## Usage
 <b>clplot</b> comes with many options for style, customization, and chart types.
-#### Options:
+### Options:
 
- The below chart has basic information about command line options that can be passed to clplot.For full documentation on flags, see the [documentation site](https://k-vernooy.github.io/projects/clplot).  
+ The below chart has basic information about command line options that can be passed to clplot. For full documentation on flags, see the [documentation site](https://k-vernooy.github.io/projects/clplot).  
    
 | Flag        | Description           | Example  |
 | ------------- |-------------| -----|

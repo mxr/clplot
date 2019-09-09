@@ -10,7 +10,17 @@
     \e[1mclplot\e[0m generates ascii plots for given data.
 
 \e[1mOPTIONS\e[0m
-    -n, --bits=BITS
-        Set the number of bits to modify. Default is one bit.
+    -d, --data
+        Adds a data series to the chart - required. Data must be in format: [x,y,z]
+    -c, --color
+        Adds color to the chart. Specified with a list of keywords (red, blue, etc), or a color number using 256 colorspace.
+    -t, --type
+        Changes the type of the chart. Options: line, bar
+    -h, --height
+        Changes the height of the chart, in characters.
+    -w, --width
+        Changes the width of the chart, in characters.
+    -p, --position
+        Shifts the graph a certain amount of characters left or right, in the format: [x,y]
 
 \e[1mCLPLOT(1)\e[0m
