@@ -171,17 +171,19 @@ void Chart::winSet(int height, int width, int posX, int posY, int termHeight, in
             window.push_back(row);
         }
 
-        //===================
-        // Print the window
-        //===================
-
-        for ( int j = 0; j < termHeight; j++ ) {
-            for ( int k = 0; k < termWidth; k++ ) {
-                cout << window[j][k];
-                // cout << j << k;
-            }
-            cout << endl;
-        } 
-
     }
+}
+
+void Chart::draw(int termHeight, int termWidth) {
+    //===================
+    // Print the window
+    //===================
+
+    for ( int j = 0; j < termHeight; j++ ) {
+        for ( int k = 0; k < termWidth; k++ ) {
+            cout << window[j][k];
+            // cout << j << k;
+        }
+        cout << endl;
+    } 
 }
