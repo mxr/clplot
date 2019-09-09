@@ -204,7 +204,7 @@ int main(int argc, char *argv[]) {
 
             }
             else {
-                cout << "chart: \e[91merror: \e[0m\"\e[93m" << argv[i+1] << "\e[0m\" is an invalid position. Position must in the format \"\e[94mx,y\e[0m\"." << endl;
+                cout << "chart: \e[91merror: \e[0m\"\e[93m" << argv[i+1] << "\e[0m\" is an invalid position. Position must in the format \"\e[93mx,y\e[0m\"." << endl;
                 return 1;
             }
             
@@ -238,6 +238,7 @@ int main(int argc, char *argv[]) {
 
     chart.winSet(chartHeight, chartWidth, posX, posY, lines, cols);
 
+    chart.draw(lines,cols);
 }
 
 

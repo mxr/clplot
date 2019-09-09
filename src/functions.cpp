@@ -77,8 +77,8 @@ void Chart::winSet(int height, int width, int posX, int posY, int termHeight, in
         cout << "chart: \e[31merror:\e[0m The sum of the chart height (\e[93m" << height << "\e[0m) and vertical position (\e[93m" << posY <<  "\e[0m) is greater than the terminal height (\e[93m" << termHeight << "\e[0m)." << endl;
         exit(1);
     }
-    else if ( width + posX > termWidth) {
-        cout << "chart: \e[31merror:\e[0m The sum of the chart width (\e[93m" << width << "\e[0m) and horizontal position (\e[93m" << posX <<  "\e[0m) is greater than the terminal width (\e[93m" << termWidth << "\e[0m)." << endl;
+    else if ( width + posX + 1 > termWidth) {
+        cout << "chart: \e[31merror:\e[0m The sum of the chart width (\e[93m" << width + 1 << "\e[0m) and horizontal position (\e[93m" << posX <<  "\e[0m) is greater than the terminal width (\e[93m" << termWidth << "\e[0m)." << endl;
         exit(1);
     }
     else {
@@ -88,8 +88,8 @@ void Chart::winSet(int height, int width, int posX, int posY, int termHeight, in
 
         vector<int> tl = { posX, posY };
         vector<int> tr = { posX + width, posY };
-        vector<int> bl = { posX, posY + height };
-        vector<int> br = { posX + width, posY + height };
+        vector<int> bl = { posX, posY + height - 1 };
+        vector<int> br = { posX + width, posY + height - 1 };
 
         for (int i = 0; i <= termHeight; i++) {
 
