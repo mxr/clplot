@@ -98,12 +98,14 @@ int main(int argc, char *argv[]) {
     bool heightSet = false;
     bool posSet = false;
 
+    bool sparkline = false;
+
     int dataCount;
     int typeCount;
     int chartHeight = lines - 2;
     int chartWidth = cols - 1;
     int posX = 0;
-    int posY = 1;
+    int posY = 0;
 
     string chartType = "line";
     string dataStr;
@@ -147,6 +149,9 @@ int main(int argc, char *argv[]) {
             }
             
             typeSet = true;
+        }
+        else if (argv[i] == string("-t")) {
+            sparkline = true;
         }
         else if (argv[i] == string("-h")) {
             if (heightSet) {
@@ -218,29 +223,18 @@ int main(int argc, char *argv[]) {
         return 1;
     }
 
+    posY++;
     // Create chart object
     //====================
     Chart chart;
 
     chart.addType(chartType);
     chart.addData(dataStr, lines, cols);
-    // chart.addSize(chartHeight, chartWidth, chartPosX, chartPosY);
-
-    cout << "Chart type: " << chart.getType() << endl;
-    cout << "Chart data: ";
-    vector<float> data = chart.getData();
-    for (int i = 0; i < data.size(); i++) {
-        cout << noshowpoint << data[i] << " ";
-    }
-    // cout << "\e[91mtest";
-
-    cout << endl;
-
     chart.winSet(chartHeight, chartWidth, posX, posY, lines, cols);
+    chart.dataDraw();
 
     chart.draw(lines,cols);
 
-    chart.dataDraw();
 }
 
 
