@@ -15,7 +15,7 @@ class Chart {
 
   int chartCharWidth;
   int chartCharHeight;
-  
+
   string type;
   vector<float> data;
 
@@ -29,8 +29,6 @@ public:
     vector<float> getData();
 
     void winSet(int height, int width, int posX, int posY, int termHeight, int termWidth);
-
-    void draw(int termHeight, int termWidth);
-
     void dataDraw();
+    void draw(int termHeight, int termWidth);
 };

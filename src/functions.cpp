@@ -69,11 +69,6 @@ vector<float> Chart::getData() {
 }
 
 void Chart::winSet(int height, int width, int posX, int posY, int termHeight, int termWidth) {
-    // height will be lt termheight
-
-    // cout << "chart height: " << height << endl;
-    // cout << "position y: " << posY << endl;
-
     chartCharHeight = height;
     chartCharWidth = width;
 
@@ -86,10 +81,6 @@ void Chart::winSet(int height, int width, int posX, int posY, int termHeight, in
         exit(1);
     }
     else {
-        cout << "Chart height: " << height << endl;
-        cout << "Chart width: " << width << endl;
-
-
         vector<int> tl = { posX, posY };
         vector<int> tr = { posX + width - 1, posY };
         vector<int> bl = { posX, posY + height - 1 };
@@ -192,6 +183,14 @@ void Chart::draw(int termHeight, int termWidth) {
     } 
 }
 
+vector<int> chartPattern(vector<float> steps) {
+    for ( int i = 0; i < steps.size(); i = i + 2) {
+        cout << "up " << steps[i] << " over " << steps[i + 1] << endl;
+    }
+    vector<int> returnVec = {1,2};
+    return returnVec;
+}
+
 void Chart::dataDraw() {
     float widtho = chartCharWidth - 3;
     float horSteps = widtho / (data.size() - 1);
@@ -200,28 +199,31 @@ void Chart::dataDraw() {
     float max =  *( max_element( data.begin(), data.end() ) );
     float range = ( max - min );
 
-    float start;
-    if ( data[1] == min ) {
-        start = 1;
+    float startCoord;
+
+    if ( data[0] == min ) {
+        startCoord = 1;
+        cout << "Starting coord: 1, 1" << endl;
     }
     else {
-
+        cout << " start in relation to min/max: " << data[0] << " " << min << " " << max << endl;
+        // cout << "Starting coord: 1, 1" << endl;
     }
 
-    int coord[2];
-
     float verSteps = (Chart::chartCharHeight - 3) / range ;
+    vector<float> chartSteps;
+    cout << "REMEMBER TO ALWAYS ROUND DOWN ON HORIZONTAL STEPS" << endl;
 
     for ( int x = 1; x < data.size(); x++ ) {
         // cout << data[x - 1] << " - " << data[x] << endl;
         float diff = data[x] - data[x - 1];
-        cout << "up " << diff * verSteps << " over " << horSteps << endl;
+        chartSteps.push_back(diff * verSteps);
+        chartSteps.push_back(horSteps);
     }
 
-    // cout << verSteps << endl;
-    // cout << horSteps << endl;
-}
+    chartPattern(chartSteps);
 
-vector<int> chartPattern(vector<float> steps) {
+    int currentCoord[2];
+    window[2][2] = "\e[31m┐\e[0m";
 
 }
