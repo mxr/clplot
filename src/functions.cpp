@@ -1,6 +1,7 @@
 #include "../include/chart.hpp"
 #include <iostream>
 #include <string>
+#include <math.h>       /* fabs */
 
 using namespace std;
 
@@ -192,20 +193,35 @@ void Chart::draw(int termHeight, int termWidth) {
 }
 
 void Chart::dataDraw() {
-    int horSteps = (( Chart::chartCharWidth - 2 ) * 2 ) / data.size();
-
-
+    float widtho = chartCharWidth - 3;
+    float horSteps = widtho / (data.size() - 1);
     // smallest data:
     float min =  *( min_element( data.begin(), data.end() ) );
     float max =  *( max_element( data.begin(), data.end() ) );
     float range = ( max - min );
 
+    float start;
+    if ( data[1] == min ) {
+        start = 1;
+    }
+    else {
+
+    }
+
+    int coord[2];
+
     float verSteps = (Chart::chartCharHeight - 3) / range ;
 
     for ( int x = 1; x < data.size(); x++ ) {
-        cout << data[x - 1] << " - " << data[x] << endl;
+        // cout << data[x - 1] << " - " << data[x] << endl;
+        float diff = data[x] - data[x - 1];
+        cout << "up " << diff * verSteps << " over " << horSteps << endl;
     }
 
-    cout << verSteps << endl;
-    cout << horSteps << endl;
+    // cout << verSteps << endl;
+    // cout << horSteps << endl;
+}
+
+vector<int> chartPattern(vector<float> steps) {
+
 }
