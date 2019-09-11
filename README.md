@@ -24,6 +24,7 @@ make install
 | -h | Change the height of the chart (in lines) |  `-h 14`
 -w | Change the width of the chart (in columns) |  `-w 20`
 -p | Specify the coordinate for the top left corner of the chart. |  `-p 5,6`
+-s | Sparkline charts - remove all labels |  `-s`
 
 
 ## See also
