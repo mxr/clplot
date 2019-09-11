@@ -1,7 +1,6 @@
 #include "../include/chart.hpp"
 #include <iostream>
-#include <string>
-#include <math.h>       /* fabs */
+#include <math.h>
 
 using namespace std;
 
@@ -48,15 +47,7 @@ void Chart::addData(string newData, int lines, int cols) {
 
     height = lines;
     width = cols;
-    // for (int i = 0; i < iterCount; i = i + 2) {
-    //     // cout << i << endl;
 
-    //     //assign the current data value to addstr
-
-    //     string::size_type sz;
-    //     float addFloat = stof(addstr, &sz);
-    //     data.push_back(addFloat);
-    // }
 }
 
 vector<float> Chart::getData() {
@@ -68,23 +59,24 @@ vector<float> Chart::getData() {
     return returnV;
 }
 
-void Chart::winSet(int height, int width, int posX, int posY, int termHeight, int termWidth) {
+void Chart::winSet(int height, int width, int positionX, int positionY, int termHeight, int termWidth) {
     chartCharHeight = height;
     chartCharWidth = width;
-
-    if ( height + posY + 1 > termHeight) {
-        cout << "chart: \e[31merror:\e[0m The sum of the chart height (\e[93m" << height << "\e[0m) and vertical position (\e[93m" << posY <<  "\e[0m) is greater than the terminal height (\e[93m" << termHeight << "\e[0m)." << endl;
+    posX = positionX;
+    posY = positionY;
+    if ( height + positionY > termHeight) {
+        cout << "chart: \e[31merror:\e[0m The sum of the chart height (\e[93m" << height << "\e[0m) and vertical position (\e[93m" << positionY <<  "\e[0m) is greater than the terminal height (\e[93m" << termHeight << "\e[0m)." << endl;
         exit(1);
     }
-    else if ( width + posX > termWidth) {
-        cout << "chart: \e[31merror:\e[0m The sum of the chart width (\e[93m" << width << "\e[0m) and horizontal position (\e[93m" << posX <<  "\e[0m) is greater than the terminal width (\e[93m" << termWidth << "\e[0m)." << endl;
+    else if ( width + positionX > termWidth) {
+        cout << "chart: \e[31merror:\e[0m The sum of the chart width (\e[93m" << width << "\e[0m) and horizontal position (\e[93m" << positionX <<  "\e[0m) is greater than the terminal width (\e[93m" << termWidth << "\e[0m)." << endl;
         exit(1);
     }
     else {
-        vector<int> tl = { posX, posY };
-        vector<int> tr = { posX + width - 1, posY };
-        vector<int> bl = { posX, posY + height - 1 };
-        vector<int> br = { posX + width - 1, posY + height - 1 };
+        vector<int> tl = { positionX, positionY };
+        vector<int> tr = { positionX + width - 1, positionY };
+        vector<int> bl = { positionX, positionY + height - 1 };
+        vector<int> br = { positionX + width - 1, positionY + height - 1 };
 
         for (int i = 0; i <= termHeight; i++) {
 
@@ -193,37 +185,40 @@ vector<int> chartPattern(vector<float> steps) {
 
 void Chart::dataDraw() {
     float widtho = chartCharWidth - 3;
-    float horSteps = widtho / (data.size() - 1);
-    // smallest data:
     float min =  *( min_element( data.begin(), data.end() ) );
     float max =  *( max_element( data.begin(), data.end() ) );
     float range = ( max - min );
+    float horSteps = widtho / (data.size() - 1);
+    float verSteps = (Chart::chartCharHeight - 3) / range ;
 
-    float startCoord;
+    int currentCoord[2];
+    currentCoord[0] = 1;
 
     if ( data[0] == min ) {
-        startCoord = 1;
-        cout << "Starting coord: 1, 1" << endl;
+        currentCoord[1] = 1;
+    }
+    else if ( data[0] == max ) {
+        currentCoord[1] = chartCharHeight - 2;
     }
     else {
         cout << " start in relation to min/max: " << data[0] << " " << min << " " << max << endl;
-        // cout << "Starting coord: 1, 1" << endl;
     }
 
-    float verSteps = (Chart::chartCharHeight - 3) / range ;
+    cout << "start coordinate (chart relative): " << currentCoord[0] << ", " << currentCoord[1] << endl;
     vector<float> chartSteps;
-    cout << "REMEMBER TO ALWAYS ROUND DOWN ON HORIZONTAL STEPS" << endl;
-
+    
     for ( int x = 1; x < data.size(); x++ ) {
-        // cout << data[x - 1] << " - " << data[x] << endl;
         float diff = data[x] - data[x - 1];
         chartSteps.push_back(diff * verSteps);
         chartSteps.push_back(horSteps);
     }
 
     chartPattern(chartSteps);
+    
+    int bottomLeftCoord[2];
+    bottomLeftCoord[0] = posX + 1;
+    bottomLeftCoord[1] = posY + chartCharHeight - 2;
 
-    int currentCoord[2];
-    window[2][2] = "\e[31m┐\e[0m";
+    window[bottomLeftCoord[1]][bottomLeftCoord[0]] = "\e[31m┐\e[0m";
 
 }
