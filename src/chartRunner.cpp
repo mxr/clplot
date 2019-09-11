@@ -3,20 +3,28 @@
 #include <sys/ioctl.h>
 #include <stdio.h>
 #include <unistd.h>
-#include <vector>
 #include <sstream> 
-// #include <algorithm>
 
 using namespace std;
 
-bool dataCheck(string dataStr) {
+inline bool isInteger(const string & s) {
+    if (s.empty() || ((!isdigit(s[0])) && (s[0] != '-') && (s[0] != '+'))) {
+        return false;
+    }
+    char * p;
+    strtol(s.c_str(), &p, 10);
+    return (*p == 0);
+}
 
+bool dataCheck(string dataStr) {
     string b1 = dataStr.substr(0,1);
     string b2 =  dataStr.substr(dataStr.length() - 1,1);
 
     if ( b1 != "[" || b2 != "]") {
         return false;
     }
+    string removed = dataStr.substr(1, dataStr.length() - 2);
+    // cout << removed << endl;
     return true;
 }
 
@@ -29,36 +37,12 @@ bool typeCheck(string type) {
     
 }
 
-void chartTypes() {
-    vector<string> dataTypes = { "line", "bar" };
-    cout << "\nThe following are currently accepted chart types: \e[33m";
-    for ( int i = 0; i < dataTypes.size() - 1; i++) {
-        cout << dataTypes[i] << ", ";
-    }
-    cout << dataTypes[dataTypes.size() - 1] << endl;
-}
-
 bool sizeCheck(int height, int termHeight, int min) {
-
     if ( height > min && height <= termHeight) {
-        // cout << height << endl;
         return true;
     }
-
     return false;
 }
-
-inline bool isInteger(const string & s) {
-    if (s.empty() || ((!isdigit(s[0])) && (s[0] != '-') && (s[0] != '+'))) {
-        return false;
-    }
-
-    char * p;
-    strtol(s.c_str(), &p, 10);
-
-    return (*p == 0);
-}
-
 
 bool posCheck(string data) {
     size_t commaCount = count(data.begin(), data.end(), ',');
@@ -78,6 +62,15 @@ bool posCheck(string data) {
     }
     
     return false;
+}
+
+void chartTypes() {
+    vector<string> dataTypes = { "line", "bar" };
+    cout << "\nThe following are currently accepted chart types: \e[33m";
+    for ( int i = 0; i < dataTypes.size() - 1; i++) {
+        cout << dataTypes[i] << ", ";
+    }
+    cout << dataTypes[dataTypes.size() - 1] << endl;
 }
 
 int main(int argc, char *argv[]) {
@@ -113,7 +106,7 @@ int main(int argc, char *argv[]) {
 
 
     //-==================================================
-    //   Records the data series in the dataStr variable
+    //  Records the arguments, checks for errors in data
     //===================================================
     for (int i = 1; i < argc; i++) {
         
@@ -150,7 +143,7 @@ int main(int argc, char *argv[]) {
             
             typeSet = true;
         }
-        else if (argv[i] == string("-t")) {
+        else if (argv[i] == string("-s")) {
             sparkline = true;
         }
         else if (argv[i] == string("-h")) {
@@ -218,12 +211,20 @@ int main(int argc, char *argv[]) {
 
     }
 
+    // todo - make this the first error test
+
     if ( dataStr == "" ) {
         cout << "chart: \e[91merror: \e[0mData must be passed to chart with the -d flag. See the readme for more information." << endl;
         return 1;
     }
 
+
+    // increment positions to allow room for scales (if sparkline option not set)
     posY++;
+    if (!sparkline) {
+        posX++;
+    }
+
     // Create chart object
     //====================
     Chart chart;
@@ -236,5 +237,3 @@ int main(int argc, char *argv[]) {
     chart.draw(lines,cols);
 
 }
-
-
