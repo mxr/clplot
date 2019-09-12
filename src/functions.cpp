@@ -177,7 +177,8 @@ void Chart::draw(int termHeight, int termWidth) {
 
 vector<int> chartPattern(vector<float> steps) {
     for ( int i = 0; i < steps.size(); i = i + 2) {
-        cout << "up " << steps[i] << " over " << steps[i + 1] << endl;
+        // cout << "up " << steps[i] << " over " << steps[i + 1] << endl;
+        cout << "coord: " << steps[i] << ", " << steps[i + 1] << endl;
     }
     vector<int> returnVec = {1,2};
     return returnVec;
@@ -189,16 +190,16 @@ void Chart::dataDraw() {
     float max =  *( max_element( data.begin(), data.end() ) );
     float range = ( max - min );
     float horSteps = widtho / (data.size() - 1);
-    float verSteps = (Chart::chartCharHeight - 3) / range ;
+    float verSteps = range / (Chart::chartCharHeight - 3) ;
 
-    int currentCoord[2];
-    currentCoord[0] = 1;
+    float currentCoord[2];
+    currentCoord[0] = 0;
 
     if ( data[0] == min ) {
         currentCoord[1] = 1;
     }
     else if ( data[0] == max ) {
-        currentCoord[1] = chartCharHeight - 2;
+        currentCoord[1] = (2 * (chartCharHeight - 2)) - 1;
     }
     else {
         cout << " start in relation to min/max: " << data[0] << " " << min << " " << max << endl;
@@ -206,19 +207,30 @@ void Chart::dataDraw() {
 
     cout << "start coordinate (chart relative): " << currentCoord[0] << ", " << currentCoord[1] << endl;
     vector<float> chartSteps;
-    
+
+    cout << data[0] << "-" << min << endl;
+    cout << verSteps << endl;
+
+    chartSteps.push_back(currentCoord[0]);
+    chartSteps.push_back(currentCoord[1]);
+
     for ( int x = 1; x < data.size(); x++ ) {
         float diff = data[x] - data[x - 1];
-        chartSteps.push_back(diff * verSteps);
-        chartSteps.push_back(horSteps);
+        float verChange = 2 * (diff * verSteps);
+        float horChange = 2 * horSteps;
+        currentCoord[0] += horChange;
+        currentCoord[1] += verChange;
+
+        chartSteps.push_back(currentCoord[0]);
+        chartSteps.push_back(currentCoord[1]);
     }
 
     chartPattern(chartSteps);
-    
-    int bottomLeftCoord[2];
-    bottomLeftCoord[0] = posX + 1;
-    bottomLeftCoord[1] = posY + chartCharHeight - 2;
 
-    window[bottomLeftCoord[1]][bottomLeftCoord[0]] = "\e[31m┐\e[0m";
+    // int bottomLeftCoord[2];
+    // bottomLeftCoord[0] = posX + 1;
+    // bottomLeftCoord[1] = posY + chartCharHeight - 2;
+
+    // window[bottomLeftCoord[1]][bottomLeftCoord[0]] = "\e[31m┐\e[0m";
 
 }
