@@ -176,24 +176,37 @@ void Chart::draw(int termHeight, int termWidth) {
 }
 
 vector<int> chartPattern(vector<float> steps) {
+    bool lastRound = false;
     for ( int i = 0; i < steps.size(); i = i + 2) {
-        // cout << "up " << steps[i] << " over " << steps[i + 1] << endl;
-        cout << "coord: " << steps[i] << ", " << steps[i + 1] << endl;
+
+        if ( i != steps.size() - 2  ) {
+            float up = (steps[i + 3] - steps[i + 1]);
+            float over = (steps[i + 2] - steps[i]);
+
+            cout << "coord: " << steps[i] << ", " << steps[i + 1] << endl;
+            cout << "up " << up << " over " << over << endl;
+        }
+        else {
+            cout << "coord: " << steps[i] << ", " << steps[i + 1] << endl;  
+        }
+
     }
     vector<int> returnVec = {1,2};
     return returnVec;
 }
 
 void Chart::dataDraw() {
-    float widtho = chartCharWidth - 3;
+
     float min =  *( min_element( data.begin(), data.end() ) );
     float max =  *( max_element( data.begin(), data.end() ) );
     float range = ( max - min );
-    float horSteps = widtho / (data.size() - 1);
-    float verSteps = range / (Chart::chartCharHeight - 3) ;
+
+    float horSteps = (chartCharWidth - 3) / (data.size() - 1);
+    float verStepsData = range / (Chart::chartCharHeight - 3);
+    float verStepsChart = (Chart::chartCharHeight - 3) / range;
 
     float currentCoord[2];
-    currentCoord[0] = 0;
+    currentCoord[0] = 1;
 
     if ( data[0] == min ) {
         currentCoord[1] = 1;
@@ -202,21 +215,17 @@ void Chart::dataDraw() {
         currentCoord[1] = (2 * (chartCharHeight - 2)) - 1;
     }
     else {
-        cout << " start in relation to min/max: " << data[0] << " " << min << " " << max << endl;
+        currentCoord[1] = 2 * ( verStepsChart * ( data[0] - min ) ) + 1;
     }
 
-    cout << "start coordinate (chart relative): " << currentCoord[0] << ", " << currentCoord[1] << endl;
     vector<float> chartSteps;
-
-    cout << data[0] << "-" << min << endl;
-    cout << verSteps << endl;
 
     chartSteps.push_back(currentCoord[0]);
     chartSteps.push_back(currentCoord[1]);
 
     for ( int x = 1; x < data.size(); x++ ) {
         float diff = data[x] - data[x - 1];
-        float verChange = 2 * (diff * verSteps);
+        float verChange = 2 * (diff * verStepsChart);
         float horChange = 2 * horSteps;
         currentCoord[0] += horChange;
         currentCoord[1] += verChange;
