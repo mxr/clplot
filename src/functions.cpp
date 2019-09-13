@@ -179,20 +179,30 @@ vector<int> chartPattern(vector<float> steps) {
     bool lastRound = false;
     for ( int i = 0; i < steps.size(); i = i + 2) {
 
-        if ( i != steps.size() - 2  ) {
-            float up = (steps[i + 3] - steps[i + 1]);
-            float over = (steps[i + 2] - steps[i]);
+        float x1 = round(steps[i]);
+        float y1 = round(steps[i + 1]);
 
-            cout << "coord: " << steps[i] << ", " << steps[i + 1] << endl;
-            cout << "up " << up << " over " << over << endl;
+        float x2 = round(steps[i + 2]);
+        float y2 = round(steps[i + 3]);
+
+        if ( i != steps.size() - 2  ) {
+            float up = (y2 - y1);
+            float over = (x2 - x1);
+
+            cout << "coord: " << x1 << ", " << y1 << endl;
+            // cout << "up " << up << " over " << over << endl;
         }
         else {
             cout << "coord: " << steps[i] << ", " << steps[i + 1] << endl;  
         }
 
     }
-    vector<int> returnVec = {1,2};
+    vector<int> returnVec = {1,1,2,1,3,2,2};
     return returnVec;
+}
+
+void Chart::addChart(float coord1, float coord2) {
+    //todo
 }
 
 void Chart::dataDraw() {
@@ -234,8 +244,28 @@ void Chart::dataDraw() {
         chartSteps.push_back(currentCoord[1]);
     }
 
-    chartPattern(chartSteps);
+    vector<int> pattern = chartPattern(chartSteps);
+    for ( int i = 0; i < pattern.size(); i = i + 2) {
+        if ( pattern[i] == 1 && pattern[i + 1] == 1) {
+            string addChar = lineChars[5];
+            // increment curCoordinate
+        }
+        else if ( pattern[i] == 1 && pattern[i + 1] == 2) {
+            string addChar = lineChars[3];
+            // increment curCoordinate
 
+        }
+        else if ( pattern[i] == 1 && pattern[i + 1] == 2) {
+            string addChar = lineChars[3];
+            // increment curCoordinate
+        }
+        else {
+
+        }
+
+        // draw based on curCoordinate and addChar
+    }
+    
     // int bottomLeftCoord[2];
     // bottomLeftCoord[0] = posX + 1;
     // bottomLeftCoord[1] = posY + chartCharHeight - 2;
