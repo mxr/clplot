@@ -5,8 +5,7 @@ using namespace std;
     
 class Chart {
   vector<string> lineChars = { "╭", "╮", "╰", "╯", "│", "─" };
-
-  // vector<string> lineChars = { "╔", "╖", "╙", "╝", "║", "═" };
+  vector<string> lineChars2 = { "╔", "╖", "╙", "╝", "║", "═" };
 
   int width;
   int height;
@@ -31,4 +30,6 @@ public:
     void winSet(int height, int width, int posX, int posY, int termHeight, int termWidth);
     void dataDraw();
     void draw(int termHeight, int termWidth);
+
+    void addChart(float coord1, float coord2);
 };
