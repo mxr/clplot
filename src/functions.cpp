@@ -176,28 +176,61 @@ void Chart::draw(int termHeight, int termWidth) {
 }
 
 vector<int> chartPattern(vector<float> steps) {
+    vector<int> returnVec;
+
     bool lastRound = false;
     for ( int i = 0; i < steps.size(); i = i + 2) {
 
         float x1 = round(steps[i]);
         float y1 = round(steps[i + 1]);
 
-        float x2 = round(steps[i + 2]);
-        float y2 = round(steps[i + 3]);
+        int x2 = round(steps[i + 2]);
+        int y2 = round(steps[i + 3]);
 
         if ( i != steps.size() - 2  ) {
-            float up = (y2 - y1);
-            float over = (x2 - x1);
+            int up = (y2 - y1);
+            int over = (x2 - x1);
 
-            cout << "coord: " << x1 << ", " << y1 << endl;
-            // cout << "up " << up << " over " << over << endl;
-        }
-        else {
-            cout << "coord: " << steps[i] << ", " << steps[i + 1] << endl;  
+            cout << "up " << up << " over " << over << endl;
+
+            if ( fabs(up) > over ) {
+
+                int whole = (int) up / over;
+                int mod = up % over;
+                int upAdd;
+                cout << whole << " " << mod << endl;
+                for ( int x = 0; x < over; x++ ) {
+                    returnVec.push_back(1);
+                    for ( int y = 0; y < fabs(whole); y++ ) {
+                        int type;
+                        if ( whole > 0 ) {
+                            type = 2;
+                            // up
+                        }
+                        else {
+                            type = 3;
+                            // down
+                        }
+                        returnVec.push_back(type);
+                        if ( fabs(mod) > 0 ) {
+                            returnVec.push_back(type);
+                            if ( type == 2 ) {
+                                mod--;
+                            }
+                            else {
+                                mod++;
+                            }
+                        }
+                    }
+                }
+            }
+            else {
+                int whole = (int) up / over;
+                int mod = over % up;
+            }
         }
 
     }
-    vector<int> returnVec = {1,1,2,1,3,2,2};
     return returnVec;
 }
 
@@ -265,7 +298,7 @@ void Chart::dataDraw() {
 
         // draw based on curCoordinate and addChar
     }
-    
+
     // int bottomLeftCoord[2];
     // bottomLeftCoord[0] = posX + 1;
     // bottomLeftCoord[1] = posY + chartCharHeight - 2;
