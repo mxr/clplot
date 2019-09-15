@@ -224,8 +224,13 @@ vector<int> chartPattern(vector<float> steps) {
                 }
             }
             else {
-                int whole = (int) over / up;
-                int mod = over % up;
+
+                // cout << over << " is greater than vertical distance, " << fabs(up) << endl;
+                int whole = (int) over / fabs(up);
+                std::cout << "for each step up, go " << whole << " steps forward" << endl;
+                int mod = over % (int) fabs(up);
+                std::cout << "with " << mod << " to be added" << endl;
+
                 int overAdd;
                 int type;
                 
@@ -244,7 +249,7 @@ vector<int> chartPattern(vector<float> steps) {
 
                 for ( int x = 0; x < fabs(up); x++ ) {
                     returnVec.push_back(type);
-                    for ( int y = 0; y < over; y++ ) {
+                    for ( int y = 0; y < whole; y++ ) {
                         returnVec.push_back(1);
                         if ( mod > 0 ) {
                             returnVec.push_back(1);
@@ -254,7 +259,7 @@ vector<int> chartPattern(vector<float> steps) {
                 }
             }
         }
-
+        std::cout << endl;
     }
     return returnVec;
 }
@@ -316,7 +321,7 @@ void Chart::dataDraw() {
     std::cout << "current coordinate: " << charCoord[0] << ", " << charCoord[1] << endl;
     
     for ( int i = 0; i < pattern.size(); i = i + 2) {
-        // std::cout << pattern[i] << " " << pattern[i + 1] << endl;
+        std::cout << pattern[i] << " " << pattern[i + 1] << endl;
         // if ( pattern[i] == 1 && pattern[i + 1] == 1) {
         //     string addChar = lineChars[5];
         //     // increment curCoordinate
