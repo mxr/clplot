@@ -8,9 +8,10 @@
 using namespace std;
 
 inline bool isInteger(const string & s) {
-    if (s.empty() || ((!isdigit(s[0])) && (s[0] != '-') && (s[0] != '+'))) {
+    if ( s.empty() || ((!isdigit(s[0])) && (s[0] != '-') && (s[0] != '+'))) {
         return false;
     }
+    
     char * p;
     strtol(s.c_str(), &p, 10);
     return (*p == 0);

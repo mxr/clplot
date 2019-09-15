@@ -225,26 +225,16 @@ vector<int> chartPattern(vector<float> steps) {
             }
             else {
 
-                // cout << over << " is greater than vertical distance, " << fabs(up) << endl;
                 int whole = (int) over / fabs(up);
-                std::cout << "for each step up, go " << whole << " steps forward" << endl;
                 int mod = over % (int) fabs(up);
-                std::cout << "with " << mod << " to be added" << endl;
-
                 int overAdd;
                 int type;
                 
-                // std::cout << "whole " << whole << endl;
-                // std::cout << "mod " << mod << endl;
-
-                // std::cout << "up " << up << endl;
                 if ( up > 0 ) {
                     type = 2;
-                    // up
                 }
                 else {
                     type = 3;
-                    // down
                 }
 
                 for ( int x = 0; x < fabs(up); x++ ) {
@@ -259,7 +249,6 @@ vector<int> chartPattern(vector<float> steps) {
                 }
             }
         }
-        std::cout << endl;
     }
     return returnVec;
 }
@@ -297,8 +286,8 @@ void Chart::dataDraw() {
     else {
         currentCoord[1] = 2 * ( verStepsChart * ( data[0] - min ) ) + 1;
 
-        charCoord[1] = verStepsChart * ( data[0] - min ) + 1;
-
+        charCoord[1] = round(verStepsChart * ( data[0] - min ) + 1);
+        
     }
 
     vector<float> chartSteps;
@@ -322,23 +311,40 @@ void Chart::dataDraw() {
     
     for ( int i = 0; i < pattern.size(); i = i + 2) {
         std::cout << pattern[i] << " " << pattern[i + 1] << endl;
-        // if ( pattern[i] == 1 && pattern[i + 1] == 1) {
-        //     string addChar = lineChars[5];
-        //     // increment curCoordinate
-        // }
-        // else if ( pattern[i] == 1 && pattern[i + 1] == 2) {
-        //     string addChar = lineChars[3];
-        //     // increment curCoordinate
+        
+        if ( pattern[i] == 1 && pattern[i + 1] == 1) {
+            string addChar = lineChars[5];
+            // window[curCoord[x]][curCoord[y]] = addChar
+            // increment curCoordinate
+        }
+        else if ( pattern[i] == 1 && pattern[i + 1] == 2) {
+            string addChar = lineChars[3];
+            // increment curCoordinate
 
-        // }
-        // else if ( pattern[i] == 1 && pattern[i + 1] == 2) {
-        //     string addChar = lineChars[3];
-        //     // increment curCoordinate
-        // }
-        // else {
+        }
+        else if ( pattern[i] == 1 && pattern[i + 1] == 3) {
+            string addChar = lineChars[1];
+            // increment curCoordinate
 
-        // }
+        }
+        else if ( pattern[i] == 2 && pattern[i + 1] == 1) {
+            string addChar = lineChars[0];
+            // increment curCoordinate
 
+        }
+        else if ( pattern[i] == 2 && pattern[i + 1] == 2) {
+            string addChar = lineChars[4];
+            // increment curCoordinate
+
+        }
+        else if ( pattern[i] == 3 && pattern[i + 1] == 1) {
+            string addChar = lineChars[2];
+            // increment curCoordinate
+        }
+        else if ( pattern[i] == 3 && pattern[i + 1] == 3) {
+            string addChar = lineChars[4];
+            // increment curCoordinate
+        }
         // draw based on curCoordinate and addChar
     }
 
