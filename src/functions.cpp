@@ -175,24 +175,25 @@ void Chart::draw(int termHeight, int termWidth) {
 }
 
 void Chart::drawChar(int coordX, int coordY, string content) {
-    int bl[2];
-
     coordX--;
     coordY--;
 
-    bl[0] = posX + 1; 
-    bl[1] = posY + chartCharHeight - 2;
+    int bl[2];
 
-    int coord[2] = {bl[1] - coordY, bl[0] + coordX};
+    bl[1] = posX + 1; 
+    bl[0] = posY + chartCharHeight - 2;
+
+    int coord[2] = {bl[0] - coordY, bl[1] + coordX};
 
     // cout << "rel: " << coordX << ", " << coordY << "; abs: " << coord[1] << ", " << coord[0] << endl;
     // cout << "Adding " << content << " at " << coord[1] << ", " << coord[0] << endl;
-
-
-    // window[coord[1]][coord[0]] = content;
+    // cout << "move t up " << coordY << endl;
+    // cout << bl[0] << "-" << coordY << endl;
+    // window[bl[0]][bl[1]] = "t";
+    window[coord[0]][coord[1]] = content;
 }
 
-vector<int> chartPattern(vector<float> steps) {
+vector<int> Chart::chartPattern(vector<float> steps) {
     vector<int> returnVec;
 
     bool lastRound = false;
@@ -201,8 +202,12 @@ vector<int> chartPattern(vector<float> steps) {
         float x1 = round(steps[i]);
         float y1 = round(steps[i + 1]);
 
+        // cout << "coord: " << x1 << ", " << y1 << endl;
+        drawChar(x1,y1,"█");
+
         int x2 = round(steps[i + 2]);
         int y2 = round(steps[i + 3]);
+
 
         if ( i != steps.size() - 2  ) {
             int up = (y2 - y1);
@@ -271,8 +276,8 @@ vector<int> chartPattern(vector<float> steps) {
     return returnVec;
 }
 
-void Chart::addChart(float coord1, float coord2) {
-    //todo
+void Chart::label() {
+
 }
 
 void Chart::dataDraw() {
@@ -292,21 +297,19 @@ void Chart::dataDraw() {
     charCoord[0] = 1;
 
     if ( data[0] == min ) {
-        currentCoord[1] = 1;
         charCoord[1] = 1;
 
     }
     else if ( data[0] == max ) {
-        currentCoord[1] = 2 * (chartCharHeight - 2) - 1;
         charCoord[1] = chartCharHeight - 2;
 
     }
     else {
-        currentCoord[1] = 2 * (verStepsChart * ( data[0] - min )) + 1;
-
         charCoord[1] = round(verStepsChart * ( data[0] - min ) + 1);
         
     }
+    cout << horSteps << endl;
+    currentCoord[1] = charCoord[1];
 
     vector<float> chartSteps;
 
@@ -315,9 +318,8 @@ void Chart::dataDraw() {
 
     for ( int x = 1; x < data.size(); x++ ) {
         float diff = data[x] - data[x - 1];
-        float verChange = 2 * (diff * verStepsChart);
-        float horChange = 2 * horSteps;
-        currentCoord[0] += horChange;
+        float verChange = diff * verStepsChart;
+        currentCoord[0] += horSteps;
         currentCoord[1] += verChange;
 
         chartSteps.push_back(currentCoord[0]);
@@ -325,67 +327,67 @@ void Chart::dataDraw() {
     }
 
     vector<int> pattern = chartPattern(chartSteps);
-    std::cout << "current coordinate: " << charCoord[0] << ", " << charCoord[1] << endl;
+    // std::cout << "current coordinate: " << charCoord[0] << ", " << charCoord[1] << endl;
     
-    for ( int i = 0; i < pattern.size(); i = i + 2) {
-        // std::cout << pattern[i] << " " << pattern[i + 1] << endl;
-        string addChar;
-        int increment[2] = {0,0};
-        if ( pattern[i] == 1 && pattern[i + 1] == 1) {
-            addChar = lineChars[5];
-            increment[0] = 1;
+    // for ( int i = 0; i < pattern.size(); i = i + 2) {
+    //     // std::cout << pattern[i] << " " << pattern[i + 1] << endl;
+    //     string addChar;
+    //     int increment[2] = {0,0};
+    //     if ( pattern[i] == 1 && pattern[i + 1] == 1) {
+    //         addChar = lineChars[5];
+    //         increment[0] = 1;
 
-            // increment curCoordinate
-        }
-        else if ( pattern[i] == 1 && pattern[i + 1] == 2) {
-            addChar = lineChars[3];
-            increment[0] = 1;
-            increment[1] = 1;
+    //         // increment curCoordinate
+    //     }
+    //     else if ( pattern[i] == 1 && pattern[i + 1] == 2) {
+    //         addChar = lineChars[3];
+    //         increment[0] = 1;
+    //         increment[1] = 1;
 
-            // increment curCoordinate
+    //         // increment curCoordinate
 
-        }
-        else if ( pattern[i] == 1 && pattern[i + 1] == 3) {
-            addChar = lineChars[1];
-            increment[0] = 1;
-            increment[1] = -1;
+    //     }
+    //     else if ( pattern[i] == 1 && pattern[i + 1] == 3) {
+    //         addChar = lineChars[1];
+    //         increment[0] = 1;
+    //         increment[1] = -1;
 
-            // increment curCoordinate
+    //         // increment curCoordinate
 
-        }
-        else if ( pattern[i] == 2 && pattern[i + 1] == 1) {
-            addChar = lineChars[0];
-            increment[0] = 1;
-            increment[1] = 1;
-            // increment curCoordinate
+    //     }
+    //     else if ( pattern[i] == 2 && pattern[i + 1] == 1) {
+    //         addChar = lineChars[0];
+    //         increment[0] = 1;
+    //         increment[1] = 1;
+    //         // increment curCoordinate
 
-        }
-        else if ( pattern[i] == 2 && pattern[i + 1] == 2) {
-            addChar = lineChars[4];
-            increment[0] = 2;
-            // increment curCoordinate
+    //     }
+    //     else if ( pattern[i] == 2 && pattern[i + 1] == 2) {
+    //         addChar = lineChars[4];
+    //         increment[0] = 2;
+    //         // increment curCoordinate
 
-        }
-        else if ( pattern[i] == 3 && pattern[i + 1] == 1) {
-            addChar = lineChars[2];
-            increment[0] = 1;
-            increment[1] = -1;
-            // increment curCoordinate
-        }
-        else if ( pattern[i] == 3 && pattern[i + 1] == 3) {
-            addChar = lineChars[4];
-            increment[1] = -2;
-            // increment curCoordinate
-        }
-        cout << addChar;
+    //     }
+    //     else if ( pattern[i] == 3 && pattern[i + 1] == 1) {
+    //         addChar = lineChars[2];
+    //         increment[0] = 1;
+    //         increment[1] = -1;
+    //         // increment curCoordinate
+    //     }
+    //     else if ( pattern[i] == 3 && pattern[i + 1] == 3) {
+    //         addChar = lineChars[4];
+    //         increment[1] = -2;
+    //         // increment curCoordinate
+    //     }
+    //     cout << addChar;
 
-        drawChar(charCoord[0],charCoord[1],addChar);
+    //     // drawChar(charCoord[0],charCoord[1],addChar);
 
-        charCoord[0] += increment[0];
-        charCoord[1] += increment[1];
+    //     charCoord[0] += increment[0];
+    //     charCoord[1] += increment[1];
 
-        // draw based on curCoordinate and addChar
-    }
+    //     // draw based on curCoordinate and addChar
+    // }
     // window[15][1] = "t";
     // int bottomLeftCoord[2];
     // bottomLeftCoord[0] = posX + 1;
