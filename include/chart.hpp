@@ -30,6 +30,7 @@ public:
     void winSet(int height, int width, int posX, int posY, int termHeight, int termWidth);
     void dataDraw();
     void draw(int termHeight, int termWidth);
+    void drawChar(int coordX, int coordY, string content);
 
     void addChart(float coord1, float coord2);
 };
