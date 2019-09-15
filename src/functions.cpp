@@ -65,11 +65,11 @@ void Chart::winSet(int height, int width, int positionX, int positionY, int term
     posX = positionX;
     posY = positionY;
     if ( height + positionY > termHeight) {
-        cout << "chart: \e[31merror:\e[0m The sum of the chart height (\e[93m" << height << "\e[0m) and vertical position (\e[93m" << positionY <<  "\e[0m) is greater than the terminal height (\e[93m" << termHeight << "\e[0m)." << endl;
+        std::cout << "chart: \e[31merror:\e[0m The sum of the chart height (\e[93m" << height << "\e[0m) and vertical position (\e[93m" << positionY <<  "\e[0m) is greater than the terminal height (\e[93m" << termHeight << "\e[0m)." << endl;
         exit(1);
     }
     else if ( width + positionX > termWidth) {
-        cout << "chart: \e[31merror:\e[0m The sum of the chart width (\e[93m" << width << "\e[0m) and horizontal position (\e[93m" << positionX <<  "\e[0m) is greater than the terminal width (\e[93m" << termWidth << "\e[0m)." << endl;
+        std::cout << "chart: \e[31merror:\e[0m The sum of the chart width (\e[93m" << width << "\e[0m) and horizontal position (\e[93m" << positionX <<  "\e[0m) is greater than the terminal width (\e[93m" << termWidth << "\e[0m)." << endl;
         exit(1);
     }
     else {
@@ -168,9 +168,9 @@ void Chart::draw(int termHeight, int termWidth) {
     
     for ( int j = 0; j < termHeight; j++ ) {
         for ( int k = 0; k < termWidth; k++ ) {
-            cout << window[j][k];
+            std::cout << window[j][k];
         }
-        cout << endl;
+        std::cout << endl;
     } 
 }
 
@@ -190,14 +190,14 @@ vector<int> chartPattern(vector<float> steps) {
             int up = (y2 - y1);
             int over = (x2 - x1);
 
-            // cout << "up " << up << " over " << over << endl;
 
             if ( fabs(up) > over ) {
 
                 int whole = (int) up / over;
                 int mod = up % over;
                 int upAdd;
-                // cout << whole << " " << mod << endl;
+
+                // std::cout << whole << " " << mod << endl;
                 for ( int x = 0; x < over; x++ ) {
                     returnVec.push_back(1);
                     for ( int y = 0; y < fabs(whole); y++ ) {
@@ -224,8 +224,34 @@ vector<int> chartPattern(vector<float> steps) {
                 }
             }
             else {
-                int whole = (int) up / over;
+                int whole = (int) over / up;
                 int mod = over % up;
+                int overAdd;
+                int type;
+                
+                // std::cout << "whole " << whole << endl;
+                // std::cout << "mod " << mod << endl;
+
+                // std::cout << "up " << up << endl;
+                if ( up > 0 ) {
+                    type = 2;
+                    // up
+                }
+                else {
+                    type = 3;
+                    // down
+                }
+
+                for ( int x = 0; x < fabs(up); x++ ) {
+                    returnVec.push_back(type);
+                    for ( int y = 0; y < over; y++ ) {
+                        returnVec.push_back(1);
+                        if ( mod > 0 ) {
+                            returnVec.push_back(1);
+                            mod--;   
+                        }
+                    }
+                }
             }
         }
 
@@ -266,7 +292,7 @@ void Chart::dataDraw() {
     else {
         currentCoord[1] = 2 * ( verStepsChart * ( data[0] - min ) ) + 1;
 
-        charCoord[1] = verStepsChart * ( data[0] - min );
+        charCoord[1] = verStepsChart * ( data[0] - min ) + 1;
 
     }
 
@@ -287,10 +313,10 @@ void Chart::dataDraw() {
     }
 
     vector<int> pattern = chartPattern(chartSteps);
-    cout << "current coordinate: " << currentCoord[0] << ", " << currentCoord[1] << endl;
+    std::cout << "current coordinate: " << charCoord[0] << ", " << charCoord[1] << endl;
     
     for ( int i = 0; i < pattern.size(); i = i + 2) {
-        cout << pattern[i] << " " << pattern[i + 1] << endl;
+        // std::cout << pattern[i] << " " << pattern[i + 1] << endl;
         // if ( pattern[i] == 1 && pattern[i + 1] == 1) {
         //     string addChar = lineChars[5];
         //     // increment curCoordinate
