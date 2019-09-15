@@ -28,9 +28,12 @@ public:
     vector<float> getData();
 
     void winSet(int height, int width, int posX, int posY, int termHeight, int termWidth);
-    void dataDraw();
     void draw(int termHeight, int termWidth);
     void drawChar(int coordX, int coordY, string content);
+    void label();
+    void move();
 
-    void addChart(float coord1, float coord2);
+    void dataDraw();
+
+    vector<int> chartPattern(vector<float> steps);
 };
