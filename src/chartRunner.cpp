@@ -122,7 +122,9 @@ string getColor(string colors) {
         { "light purple", 13 } 
     }; 
 
-    int colorNum;
+    int colorNum = 15;
+    string colorString;
+    string search;
 
     if ( isInteger(colors) ) {
         if ( stoi(colors) > 0 && stoi(colors) < 256 ) {
@@ -130,9 +132,15 @@ string getColor(string colors) {
         }
     }
     else {
-        string search = lower(colors);
+        search = lower(colors);
         colorNum = colorList[search];
     }
+
+    colorString += "\e[38;5;";
+    colorString += to_string(colorNum);
+    colorString += "m";
+
+    return colorString;
 }
 
 bool posCheck(string data) {
@@ -265,13 +273,14 @@ int main(int argc, char *argv[]) {
 
             if (colorCheck(argv[i + 1])) {
                 color = getColor(argv[i + 1]);
+                cout << "Chosen " << color << "color." << "\e[0m" << endl;
             }
-            // else {
-            //     cout << "chart: \e[91merror: \e[0mThe height must be an integer number of lines between 5 and the terminal height, " << lines << "." << endl;
-            //     return 1;
-            // }
+            else {
+                cout << "chart: \e[91merror: \"\e[93m" << argv[i + 1] << "\e[0m\" is not recognized as a color." << endl;
+                return 1;
+            }
             
-            // heightSet = true;
+            colorSet = true;
         }
         else if (argv[i] == string("-w")) {
             if (widthSet) {
