@@ -68,7 +68,7 @@ bool colorCheck(string colors) {
         { "cyan", 6 }, 
         { "gray", 8 }, 
         { "white", 15 }, 
-        { "orange", 208 },     
+        { "orange", 202 },     
         { "light red", 9 }, 
         { "light orange", 214 }, 
         { "light yellow", 11 }, 
@@ -351,6 +351,7 @@ int main(int argc, char *argv[]) {
 
     chart.addType(chartType);
     chart.addData(dataStr, lines, cols);
+    chart.addColor(color);    
     chart.winSet(chartHeight, chartWidth, posX, posY, lines, cols);
     chart.dataDraw();
 

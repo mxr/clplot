@@ -59,6 +59,10 @@ vector<float> Chart::getData() {
     return returnV;
 }
 
+void Chart::addColor(string newColor) {
+    color = newColor;
+}
+
 void Chart::winSet(int height, int width, int positionX, int positionY, int termHeight, int termWidth) {
     chartCharHeight = height;
     chartCharWidth = width;
@@ -174,7 +178,7 @@ void Chart::draw(int termHeight, int termWidth) {
     } 
 }
 
-void Chart::drawChar(int coordX, int coordY, string content) {
+void Chart::drawChar(int coordX, int coordY, string content, string color) {
     coordX--;
     coordY--;
 
@@ -190,7 +194,7 @@ void Chart::drawChar(int coordX, int coordY, string content) {
     // cout << "move t up " << coordY << endl;
     // cout << bl[0] << "-" << coordY << endl;
     // window[bl[0]][bl[1]] = "t";
-    window[coord[0]][coord[1]] = content;
+    window[coord[0]][coord[1]] = color + content + "\e[0m";
 }
 
 vector<int> Chart::chartPattern(vector<float> steps) {
@@ -203,7 +207,7 @@ vector<int> Chart::chartPattern(vector<float> steps) {
         float y1 = round(steps[i + 1]);
 
         // cout << "coord: " << x1 << ", " << y1 << endl;
-        drawChar(x1,y1,"█");
+        drawChar(x1,y1,"█", color);
 
         int x2 = round(steps[i + 2]);
         int y2 = round(steps[i + 3]);
@@ -258,7 +262,7 @@ vector<int> Chart::chartPattern(vector<float> steps) {
                 }
             }
             else {
-                
+
                 if ( up == 0 ) {
                     up = 1;
                 }
