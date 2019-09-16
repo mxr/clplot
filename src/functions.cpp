@@ -217,6 +217,17 @@ vector<int> Chart::chartPattern(vector<float> steps) {
             if ( fabs(up) > over ) {
 
                 int whole = (int) up / over;
+                cout << over << endl;
+                cout << up << endl;
+
+                if ( up == 0 ) {
+                    up = 1;
+                }
+
+                if ( over == 0 ) {
+                    over = 1;
+                }
+
                 int mod = up % over;
                 int upAdd;
 
@@ -247,6 +258,14 @@ vector<int> Chart::chartPattern(vector<float> steps) {
                 }
             }
             else {
+                
+                if ( up == 0 ) {
+                    up = 1;
+                }
+
+                if ( over == 0 ) {
+                    over = 1;
+                }
 
                 int whole = (int) over / fabs(up);
                 int mod = over % (int) fabs(up);
@@ -308,7 +327,7 @@ void Chart::dataDraw() {
         charCoord[1] = round(verStepsChart * ( data[0] - min ) + 1);
         
     }
-    cout << horSteps << endl;
+    // cout << horSteps << endl;
     currentCoord[1] = charCoord[1];
 
     vector<float> chartSteps;
