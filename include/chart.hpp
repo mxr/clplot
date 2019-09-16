@@ -4,6 +4,7 @@
 using namespace std;
     
 class Chart {
+
   vector<string> lineChars = { "╭", "╮", "╰", "╯", "│", "─" };
   vector<string> lineChars2 = { "╔", "╖", "╙", "╝", "║", "═" };
 
@@ -11,10 +12,10 @@ class Chart {
   int height;
   int posY;
   int posX;
-
   int chartCharWidth;
   int chartCharHeight;
 
+  string color;
   string type;
   vector<float> data;
 
@@ -24,12 +25,14 @@ public:
     void addType(string type);
     string getType();
 
+    void addColor(string newColor);
+
     void addData(string data, int lines, int cols);
     vector<float> getData();
 
     void winSet(int height, int width, int posX, int posY, int termHeight, int termWidth);
     void draw(int termHeight, int termWidth);
-    void drawChar(int coordX, int coordY, string content);
+    void drawChar(int coordX, int coordY, string content, string color);
     void label();
     void move();
 
