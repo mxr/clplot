@@ -20,18 +20,12 @@ inline bool isInteger(const string & s) {
     return (*p == 0);
 }
 
-bool C_I_String(string one, string two) {
-    if ( one.length() != two.length() ) {
-        return false;
-    }
-  
-    transform(one.begin(), one.end(), one.begin(), ::toupper); 
-    transform(two.begin(), two.end(), two.begin(), ::toupper); 
-
-    if ( one == two ) {
-        return true;
-    }
-    return false;
+string lower(string one) {
+    string returnstring;
+    std::locale loc;
+    for (std::string::size_type i=0; i<one.length(); ++i)
+        returnstring += std::tolower(one[i],loc);
+    return returnstring;
 }
 
 bool dataCheck(string dataStr) {
@@ -85,6 +79,8 @@ bool colorCheck(string colors) {
         { "light purple", 13 } 
     }; 
 
+    // int colorNum;
+
     if ( isInteger(colors) ) {
         if ( stoi(colors) > 0 && stoi(colors) < 256 ) {
             return true;
@@ -92,16 +88,18 @@ bool colorCheck(string colors) {
         return false;
     }
     else {
-        C_I_String("test", "tESt");
+        string search = lower(colors);
+        if ( colorList.find(search) == colorList.end() ) {
+            return false;
+        }
+        else {
+            return true;
+            // colorNum = colorList[search];
+        }
     }
-
-    
-    // cout << colorList.count("red"); << endl;
-    return true;
 }
 
-string getColor(string color) {
-
+string getColor(string colors) {
     map<string, int> colorList { 
         { "black", 0 }, 
         { "red", 1 }, 
@@ -123,7 +121,18 @@ string getColor(string color) {
         { "light magenta", 13 }, 
         { "light purple", 13 } 
     }; 
-    return "true";
+
+    int colorNum;
+
+    if ( isInteger(colors) ) {
+        if ( stoi(colors) > 0 && stoi(colors) < 256 ) {
+            colorNum = stoi(colors);
+        }
+    }
+    else {
+        string search = lower(colors);
+        colorNum = colorList[search];
+    }
 }
 
 bool posCheck(string data) {
