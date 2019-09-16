@@ -4,6 +4,9 @@
 #include <stdio.h>
 #include <unistd.h>
 #include <sstream> 
+#include <map>
+#include <string.h>
+#include <ctype.h>
 
 using namespace std;
 
@@ -15,6 +18,20 @@ inline bool isInteger(const string & s) {
     char * p;
     strtol(s.c_str(), &p, 10);
     return (*p == 0);
+}
+
+bool C_I_String(string one, string two) {
+    if ( one.length() != two.length() ) {
+        return false;
+    }
+  
+    transform(one.begin(), one.end(), one.begin(), ::toupper); 
+    transform(two.begin(), two.end(), two.begin(), ::toupper); 
+
+    if ( one == two ) {
+        return true;
+    }
+    return false;
 }
 
 bool dataCheck(string dataStr) {
@@ -43,6 +60,70 @@ bool sizeCheck(int height, int termHeight, int min) {
         return true;
     }
     return false;
+}
+
+bool colorCheck(string colors) {
+    map<string, int> colorList { 
+        { "black", 0 }, 
+        { "red", 1 }, 
+        { "green", 2 }, 
+        { "yellow", 3 }, 
+        { "blue", 4 }, 
+        { "magenta", 5 }, 
+        { "purple", 5 }, 
+        { "cyan", 6 }, 
+        { "gray", 8 }, 
+        { "white", 15 }, 
+        { "orange", 208 },     
+        { "light red", 9 }, 
+        { "light orange", 214 }, 
+        { "light yellow", 11 }, 
+        { "light green", 10 }, 
+        { "light blue", 12 }, 
+        { "light cyan", 14 }, 
+        { "light magenta", 13 }, 
+        { "light purple", 13 } 
+    }; 
+
+    if ( isInteger(colors) ) {
+        if ( stoi(colors) > 0 && stoi(colors) < 256 ) {
+            return true;
+        }
+        return false;
+    }
+    else {
+        C_I_String("test", "tESt");
+    }
+
+    
+    // cout << colorList.count("red"); << endl;
+    return true;
+}
+
+string getColor(string color) {
+
+    map<string, int> colorList { 
+        { "black", 0 }, 
+        { "red", 1 }, 
+        { "green", 2 }, 
+        { "yellow", 3 }, 
+        { "blue", 4 }, 
+        { "magenta", 5 }, 
+        { "purple", 5 }, 
+        { "cyan", 6 }, 
+        { "gray", 8 }, 
+        { "white", 15 }, 
+        { "orange", 208 },     
+        { "light red", 9 }, 
+        { "light orange", 214 }, 
+        { "light yellow", 11 }, 
+        { "light green", 10 }, 
+        { "light blue", 12 }, 
+        { "light cyan", 14 }, 
+        { "light magenta", 13 }, 
+        { "light purple", 13 } 
+    }; 
+    return "true";
 }
 
 bool posCheck(string data) {
@@ -90,6 +171,7 @@ int main(int argc, char *argv[]) {
     bool typeSet = false;
     bool widthSet = false;
     bool heightSet = false;
+    bool colorSet = false;
     bool posSet = false;
 
     bool sparkline = false;
@@ -100,6 +182,8 @@ int main(int argc, char *argv[]) {
     int chartWidth = cols - 1;
     int posX = 0;
     int posY = 0;
+
+    string color = "\e[38;5;15m";
 
     string chartType = "line";
     string dataStr;
@@ -162,6 +246,23 @@ int main(int argc, char *argv[]) {
             }
             
             heightSet = true;
+        }
+        else if (argv[i] == string("-c")) {
+            // cout << "color" << endl;
+            if (colorSet) {
+                cout << "chart: \e[91merror: \e[Color can only be set once" << endl;
+                return 1;
+            }
+
+            if (colorCheck(argv[i + 1])) {
+                color = getColor(argv[i + 1]);
+            }
+            // else {
+            //     cout << "chart: \e[91merror: \e[0mThe height must be an integer number of lines between 5 and the terminal height, " << lines << "." << endl;
+            //     return 1;
+            // }
+            
+            // heightSet = true;
         }
         else if (argv[i] == string("-w")) {
             if (widthSet) {
