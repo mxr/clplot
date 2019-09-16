@@ -3,16 +3,16 @@
 CC = g++
 chartCompiled = bin/chart
 
-ifneq ("$(wildcard $(chartCompiled))","")
-all: exit
-else
+# ifneq ("$(wildcard $(chartCompiled))","")
+# all: exit
+# else
 all: compile
-endif
+# endif
 
-exit:
-	@printf "Compiling...\n"
-	@sleep .3
-	@printf "\x1b[31mProgram already compiled, exiting... see 'make install' to move the binaries\e[0m\n"
+# exit:
+# 	@printf "Compiling...\n"
+# 	@sleep .3
+# 	@printf "\x1b[31mProgram already compiled, exiting... see 'make install' to move the binaries\e[0m\n"
 
 compile:
 	@echo "Compiling..."
