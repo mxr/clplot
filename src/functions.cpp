@@ -207,22 +207,41 @@ vector<int> Chart::chartPattern(vector<float> steps) {
         float y1 = round(steps[i + 1]);
 
         // cout << "coord: " << x1 << ", " << y1 << endl;
-        drawChar(x1,y1,"█", color);
 
         int x2 = round(steps[i + 2]);
         int y2 = round(steps[i + 3]);
+
 
 
         if ( i != steps.size() - 2  ) {
             int up = (y2 - y1);
             int over = (x2 - x1);
 
+            if ( up > 0 ) {
+                drawChar(x1,y1,"╯", color);
+            }
+            else if ( up < 0 ) {
+                drawChar(x1,y1,"╮", color);
+            }
+            else {
+                drawChar(x1,y1,"─", color);
+            }
+            
+            // cout << "up: " << up << endl;
+            // cout << "over: " << over << endl;
+
+            // if ( fabs(up) > over ) {
+            //     cout << up << " is greater than " << over << endl;
+            // }
+            // else {
+            //     cout << over << " is greater than " << up << endl;
+            // }
 
             if ( fabs(up) > over ) {
 
                 int whole = (int) up / over;
-                cout << over << endl;
-                cout << up << endl;
+                // cout << over << endl;
+                // cout << up << endl;
 
                 if ( up == 0 ) {
                     up = 1;
@@ -239,7 +258,7 @@ vector<int> Chart::chartPattern(vector<float> steps) {
                 for ( int x = 0; x < over; x++ ) {
                     returnVec.push_back(1);
                     for ( int y = 0; y < fabs(whole); y++ ) {
-                        int type;
+                        int type = 4;
                         if ( whole > 0 ) {
                             type = 2;
                             // up
@@ -261,8 +280,15 @@ vector<int> Chart::chartPattern(vector<float> steps) {
                     }
                 }
             }
+            else if ( up == 0 ) {
+                for ( int i = 0; i < over; i++) {
+                    cout << "over " << endl;
+                    returnVec.push_back(1);
+                }
+            }
             else {
-
+                over -= 2;
+                up -= 2;
                 if ( up == 0 ) {
                     up = 1;
                 }
@@ -274,7 +300,7 @@ vector<int> Chart::chartPattern(vector<float> steps) {
                 int whole = (int) over / fabs(up);
                 int mod = over % (int) fabs(up);
                 int overAdd;
-                int type;
+                int type = 5;
                 
                 if ( up > 0 ) {
                     type = 2;
@@ -294,6 +320,9 @@ vector<int> Chart::chartPattern(vector<float> steps) {
                     }
                 }
             }
+        }
+        else {
+            drawChar(x1,y1,"─", color);
         }
     }
     return returnVec;
@@ -352,8 +381,9 @@ void Chart::dataDraw() {
     vector<int> pattern = chartPattern(chartSteps);
     // std::cout << "current coordinate: " << charCoord[0] << ", " << charCoord[1] << endl;
     
-    // for ( int i = 0; i < pattern.size(); i = i + 2) {
-    //     // std::cout << pattern[i] << " " << pattern[i + 1] << endl;
+    for ( int i = 0; i < pattern.size() - 1; i = i + 2) {
+        std::cout << pattern[i] << " " << pattern[i + 1] << " ";
+    }
     //     string addChar;
     //     int increment[2] = {0,0};
     //     if ( pattern[i] == 1 && pattern[i + 1] == 1) {
