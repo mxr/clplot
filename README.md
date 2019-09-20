@@ -1,6 +1,7 @@
 # clplot
 An ascii chart generator for the terminal written in C++.
 
+<img src="doc/carbon.png">
 ## Installation
 
 ### Git install:
@@ -12,8 +13,7 @@ clplot -d [1,4,9,16,25] -c red
 ```
 ### Brew install:
 
-Coming upon project completion...
-
+Coming soon...
 
 ## Usage
 <b>clplot</b> comes with many options for style, customization, and chart types.
@@ -36,6 +36,13 @@ Coming upon project completion...
 - [fast](github.com/k-vernooy/fast): an implementation of cplot that monitors internet speed.
 - [stonks](github.com/k-vernooy/stonks): a stock monitoring terminal app that uses clplot to give graphs.
 - [k-vernooy.github.io/projects/clplot](https://k-vernooy.github.io/projects/clplot) - a page with full documentation and example usages and quick projects for clplot.
+
+
+## Todo
+- Add chart labels
+- New chart types
+    - bar
+    - histogram
 
 ## Compatibility
 
