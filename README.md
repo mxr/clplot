@@ -1,7 +1,8 @@
 # clplot
 An ascii chart generator for the terminal written in C++.
 
-<img src="doc/carbon.png">
+<img src="doc/carbon.png">  
+
 ## Installation
 
 ### Git install:
