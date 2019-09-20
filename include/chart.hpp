@@ -6,7 +6,7 @@ using namespace std;
 class Chart {
 
   vector<string> lineChars = { "╭", "╮", "╰", "╯", "│", "─" };
-  vector<string> lineChars2 = { "╔", "╖", "╙", "╝", "║", "═" };
+  // vector<string> lineChars = { "╔", "╗", "╚", "╝", "║", "═" };
 
   int width;
   int height;
@@ -38,5 +38,5 @@ public:
 
     void dataDraw();
 
-    vector<int> chartPattern(vector<float> steps);
+    vector<string> chartPattern(vector<float> steps);
 };
