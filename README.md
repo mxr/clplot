@@ -9,7 +9,6 @@ An ascii chart generator for the terminal written in C++.
 git clone https://github.com/k-vernooy/clplot
 make
 make install
-clplot -d [1,4,9,16,25] -c red
 ```
 ### Brew install:
 
@@ -27,7 +26,7 @@ Coming soon...
 | -t |  Specify the chart type (line, bar) | `-t bar`
 | -h | Change the height of the chart (in lines) |  `-h 14`
 -w | Change the width of the chart (in columns) |  `-w 20`
--p | Specify the coordinate for the top left corner of the chart. |  `-p 5,6`
+-p | Specify the coordinateg for the top left corner of the chart. |  `-p 5,6`
 -s | Sparkline charts - remove all labels |  `-s`
 
 
@@ -36,13 +35,6 @@ Coming soon...
 - [fast](github.com/k-vernooy/fast): an implementation of cplot that monitors internet speed.
 - [stonks](github.com/k-vernooy/stonks): a stock monitoring terminal app that uses clplot to give graphs.
 - [k-vernooy.github.io/projects/clplot](https://k-vernooy.github.io/projects/clplot) - a page with full documentation and example usages and quick projects for clplot.
-
-
-## Todo
-- Add chart labels
-- New chart types
-    - bar
-    - histogram
 
 ## Compatibility
 
