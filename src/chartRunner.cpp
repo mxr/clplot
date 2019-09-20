@@ -273,7 +273,6 @@ int main(int argc, char *argv[]) {
 
             if (colorCheck(argv[i + 1])) {
                 color = getColor(argv[i + 1]);
-                cout << "Chosen " << color << "color." << "\e[0m" << endl;
             }
             else {
                 cout << "chart: \e[91merror: \"\e[93m" << argv[i + 1] << "\e[0m\" is not recognized as a color." << endl;
