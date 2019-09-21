@@ -354,6 +354,11 @@ int main(int argc, char *argv[]) {
     chart.winSet(chartHeight, chartWidth, posX, posY, lines, cols);
     chart.dataDraw();
 
+
+    if ( !sparkline ) {
+        // chart.label();
+    } 
+
     chart.draw(lines,cols);
 
 }

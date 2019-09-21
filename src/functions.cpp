@@ -220,16 +220,16 @@ vector<string> Chart::chartPattern(vector<float> steps) {
             int up = (y2 - y1);
             int over = (x2 - x1);
 
-            // cout << "up " << up << " over " << over << endl;
-            if ( up > 0 ) {
-                drawChar(x1,y1,lineChars[3], color);
-            }
-            else if ( up < 0 ) {
-                drawChar(x1,y1,lineChars[1], color);
-            }
-            else {
-                drawChar(x1,y1,lineChars[5], color);
-            }
+            // // cout << "up " << up << " over " << over << endl;
+            // if ( up > 0 ) {
+            //     drawChar(x1,y1,lineChars[3], color);
+            // }
+            // else if ( up < 0 ) {
+            //     drawChar(x1,y1,lineChars[1], color);
+            // }
+            // else {
+            //     drawChar(x1,y1,lineChars[5], color);
+            // }
             
             // cout << "up: " << up << endl;
             // cout << "over: " << over << endl;
@@ -342,6 +342,7 @@ void Chart::label() {
 
     float newRange = (range - 1) / verStepsChart;
     int x = 1;
+
     for ( int i = 1; i <= chartCharHeight - 2; i = i + verStepsChart) {
 
         // cout << "line: " << i << endl;

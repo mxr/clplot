@@ -35,7 +35,7 @@ public:
     void drawChar(int coordX, int coordY, string content, string color);
     void label();
     void move();
-
+    string getChar(int coordX, int coordY);
     void dataDraw();
 
     vector<string> chartPattern(vector<float> steps);
