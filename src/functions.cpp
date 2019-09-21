@@ -241,7 +241,6 @@ vector<string> Chart::chartPattern(vector<float> steps) {
             //     cout << over << " is greater than " << up << endl;
             // }
             if ( fabs(up) > over ) {
-
                 int whole = (int) up / over;
                 // cout << over << endl;
                 // cout << up << endl;
@@ -257,7 +256,6 @@ vector<string> Chart::chartPattern(vector<float> steps) {
                 int mod = up % over;
                 int upAdd;
 
-                // std::cout << whole << " " << mod << endl;
                 for ( int x = 0; x < over; x++ ) {
                     returnVec.push_back("over");
                     for ( int y = 0; y < fabs(whole); y++ ) {
@@ -273,7 +271,7 @@ vector<string> Chart::chartPattern(vector<float> steps) {
                         returnVec.push_back(type);
                         if ( fabs(mod) > 0 ) {
                             returnVec.push_back(type);
-                            if ( type == "2" ) {
+                            if ( type == "up" ) {
                                 mod--;
                             }
                             else {
@@ -289,8 +287,7 @@ vector<string> Chart::chartPattern(vector<float> steps) {
                 }
             }
             else {
-                // over -= 2;
-                // up -= 2;
+                
                 if ( up == 0 ) {
                     up = 1;
                 }
@@ -435,6 +432,7 @@ void Chart::dataDraw() {
     
     for ( int i = 0; i < pattern.size(); i++) {
         // std::cout << pattern[i] << " ";
+        
         bool last = false;
 
         if ( i == pattern.size() - 1 ) {
