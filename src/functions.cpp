@@ -1,7 +1,7 @@
 #include "../include/chart.hpp"
 #include <iostream>
 #include <math.h>
-
+#include <sstream>
 using namespace std;
 
 string Chart::getType() {
@@ -331,6 +331,36 @@ vector<string> Chart::chartPattern(vector<float> steps) {
 }
 
 void Chart::label() {
+    vector<int> tl = { posX, posY };
+    vector<int> tr = { posX + chartCharWidth - 1, posY };
+    vector<int> bl = { posX, posY + chartCharHeight - 1 };
+    vector<int> br = { posX + chartCharWidth - 1, posY + chartCharHeight - 1 };
+
+
+    float min =  *( min_element( data.begin(), data.end() ) );
+    float max =  *( max_element( data.begin(), data.end() ) );
+    float range = ( max - min );
+    float horSteps = (chartCharWidth - 3) / (data.size() - 1);
+    float verStepsChart = (Chart::chartCharHeight - 3) / range;
+
+    float newRange = (range - 1) / verStepsChart;
+    int x = 1;
+    for ( int i = 1; i <= chartCharHeight - 2; i = i + verStepsChart) {
+
+        // cout << "line: " << i << endl;
+        // cout << "label: " << x * newRange << endl;
+        
+        float label = x * newRange;
+
+        ostringstream ss;
+        ss << label;
+        string s(ss.str());
+
+        // drawChar(-2,i,s,"\e[31m");
+
+        x++;
+    }
+
 
 }
 
@@ -404,7 +434,7 @@ void Chart::dataDraw() {
     // std::cout << "current coordinate: " << charCoord[0] << ", " << charCoord[1] << endl;
     
     for ( int i = 0; i < pattern.size(); i++) {
-        std::cout << pattern[i] << " ";
+        // std::cout << pattern[i] << " ";
         bool last = false;
 
         if ( i == pattern.size() - 1 ) {
@@ -413,7 +443,7 @@ void Chart::dataDraw() {
 
         if ( pattern[i] == "over" ) {
             if ( last ) {
-                cout << "end";
+                // cout << "end";
             }
             else {
                 
@@ -452,7 +482,7 @@ void Chart::dataDraw() {
             // drawChar(charCoord[0], charCoord[1], lineChars[2], color);
 
             if ( last ) {
-                cout << "end";
+                // cout << "end";
             }
             else {
                 if ( pattern[i + 1] != "down" ) {
