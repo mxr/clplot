@@ -171,7 +171,7 @@ void Chart::draw(int termHeight, int termWidth) {
     //===================
     
     for ( int j = 0; j < termHeight; j++ ) {
-        for ( int k = 0; k < termWidth; k++ ) {
+        for ( int k = 0; k < chartCharWidth + posX; k++ ) {
             std::cout << window[j][k];
         }
         std::cout << endl;
@@ -200,9 +200,8 @@ void Chart::drawChar(int coordX, int coordY, string content, string color) {
     }
 }
 
-vector<string> Chart::chartPattern(vector<float> steps) {
+vector<string> Chart::lineChartPattern(vector<float> steps) {
     vector<string> returnVec;
-
     bool lastRound = false;
     for ( int i = 0; i < steps.size(); i = i + 2) {
 
@@ -219,6 +218,7 @@ vector<string> Chart::chartPattern(vector<float> steps) {
         if ( i != steps.size() - 2  ) {
             int up = (y2 - y1);
             int over = (x2 - x1);
+                                // cout << "got here " << i << endl;
 
             // // cout << "up " << up << " over " << over << endl;
             // if ( up > 0 ) {
@@ -241,17 +241,22 @@ vector<string> Chart::chartPattern(vector<float> steps) {
             //     cout << over << " is greater than " << up << endl;
             // }
             if ( fabs(up) > over ) {
-                int whole = (int) up / over;
-                // cout << over << endl;
-                // cout << up << endl;
-
+                // cout << "got here 0" << endl;
                 if ( up == 0 ) {
                     up = 1;
+                    cout << 0 << endl;
                 }
 
                 if ( over == 0 ) {
                     over = 1;
+                    cout << 00 << endl;
                 }
+                int whole = (int) up / over;
+                // cout << over << endl;
+                // cout << up << endl;
+                // cout << "got here 1" << endl;
+
+
 
                 int mod = up % over;
                 int upAdd;
@@ -282,18 +287,23 @@ vector<string> Chart::chartPattern(vector<float> steps) {
                 }
             }
             else if ( up == 0 ) {
+                if ( over == 0) {
+                    over = 1;
+                }
                 for ( int i = 0; i < over; i++) {
                     returnVec.push_back("over");
                 }
+
             }
             else {
-                
                 if ( up == 0 ) {
                     up = 1;
+                    cout << 0 << endl;
                 }
 
                 if ( over == 0 ) {
-                    over = 1;
+                    over = 2;
+                    cout << 00 << endl;
                 }
 
                 int whole = (int) over / fabs(up);
@@ -321,7 +331,7 @@ vector<string> Chart::chartPattern(vector<float> steps) {
             }
         }
         else {
-            drawChar(x1,y1,"─", color);
+            // drawChar(x1,y1,"─", color);
         }
     }
     return returnVec;
@@ -343,10 +353,10 @@ void Chart::label() {
     float newRange = (range - 1) / verStepsChart;
     int x = 1;
 
-    for ( int i = 1; i <= chartCharHeight - 2; i = i + verStepsChart) {
+    for ( float i = 1; i <= chartCharHeight - 2; i += verStepsChart) {
 
-        // cout << "line: " << i << endl;
-        // cout << "label: " << x * newRange << endl;
+        cout << "line: " << i << endl;
+        cout << "label: " << x * newRange << endl;
         
         float label = x * newRange;
 
@@ -354,7 +364,7 @@ void Chart::label() {
         ss << label;
         string s(ss.str());
 
-        // drawChar(-2,i,s,"\e[31m");
+        drawChar(0,i,s,"\e[31m");
 
         x++;
     }
@@ -395,7 +405,7 @@ vector<string> removeUpDown(vector<string> input) {
     return returnString;
 }
 
-void Chart::dataDraw() {
+void Chart::lineDataDraw() {
 
     float min =  *( min_element( data.begin(), data.end() ) );
     float max =  *( max_element( data.begin(), data.end() ) );
@@ -441,7 +451,7 @@ void Chart::dataDraw() {
         chartSteps.push_back(currentCoord[1]);
     }
 
-    vector<string> pattern = removeUpDown(chartPattern(chartSteps));
+    vector<string> pattern = removeUpDown(lineChartPattern(chartSteps));
     // std::cout << "current coordinate: " << charCoord[0] << ", " << charCoord[1] << endl;
     
     for ( int i = 0; i < pattern.size() - 1; i++) {
@@ -495,9 +505,9 @@ void Chart::dataDraw() {
         charCoord[1]++;
         drawChar(charCoord[0], charCoord[1], lineChars[0], color);
     }
-    else {
-        drawChar(charCoord[0], charCoord[1], lineChars[5], color);
-    }
+    // else {
+    //     drawChar(charCoord[0], charCoord[1], lineChars[5], color);
+    // }
 
     
     // drawChar(charCoord[0], charCoord[1], "t", color);

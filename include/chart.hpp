@@ -5,8 +5,8 @@ using namespace std;
     
 class Chart {
 
-  vector<string> lineChars = { "╭", "╮", "╰", "╯", "│", "─" };
-  // vector<string> lineChars = { "╔", "╗", "╚", "╝", "║", "═" };
+  // vector<string> lineChars = { "╭", "╮", "╰", "╯", "│", "─" };
+  vector<string> lineChars = { "╔", "╗", "╚", "╝", "║", "═" };
 
   int width;
   int height;
@@ -22,6 +22,7 @@ class Chart {
   vector<vector<string> > window;
 
 public:
+
     void addType(string type);
     string getType();
 
@@ -36,7 +37,7 @@ public:
     void label();
     void move();
     string getChar(int coordX, int coordY);
-    void dataDraw();
 
-    vector<string> chartPattern(vector<float> steps);
+    void lineDataDraw();
+    vector<string> lineChartPattern(vector<float> steps);
 };
