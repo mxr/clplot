@@ -5,8 +5,8 @@ using namespace std;
     
 class Chart {
 
-  // vector<string> lineChars = { "╭", "╮", "╰", "╯", "│", "─" };
-  vector<string> lineChars = { "╔", "╗", "╚", "╝", "║", "═" };
+  vector<string> lineChars = { "╭", "╮", "╰", "╯", "│", "─" };
+  // vector<string> lineChars = { "╔", "╗", "╚", "╝", "║", "═" };
 
   int width;
   int height;
