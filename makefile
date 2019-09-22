@@ -3,6 +3,7 @@
 CC = g++
 chartCompiled = bin/clplot
 newpath = ""
+BINDIR = bin
 
 # ifneq ("$(wildcard $(chartCompiled))","")
 # all: exit
@@ -28,7 +29,9 @@ install:
 	@printf "\x1b[32mSuccessfully copied program.\x1b[0m \nRun command '\x1b[31mchart\x1b[0m' to start program!\n"
 
 silentcompile:
+	@mkdir -p $(BINDIR)
 	@${CC} -std=c++11 src/chartRunner.cpp src/functions.cpp -o ${chartCompiled}
 
 brewinstall:
+	@mkdir -p ${newpath}/bin
 	@install -m 0755 ${chartCompiled} ${newpath}/bin/clplot
