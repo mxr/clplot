@@ -432,7 +432,7 @@ void Chart::dataDraw() {
     // std::cout << "current coordinate: " << charCoord[0] << ", " << charCoord[1] << endl;
     
     for ( int i = 0; i < pattern.size(); i++) {
-        // std::cout << pattern[i] << " ";
+        std::cout << pattern[i] << " ";
         
         bool last = false;
 
@@ -467,8 +467,14 @@ void Chart::dataDraw() {
             }
             else {
                 if ( pattern[i + 1] != "up" ) {
-                    charCoord[1]++;
-                    drawChar(charCoord[0], charCoord[1], lineChars[0], color);
+                    if ( pattern[ i + 1 ] == "down" ) {
+                        i++;
+                        drawChar(charCoord[0], charCoord[1], lineChars[0], color);
+                    }
+                    else {
+                        charCoord[1]++;
+                        drawChar(charCoord[0], charCoord[1], lineChars[0], color);
+                    }
                 }
                 else {
                     charCoord[1]++;
@@ -485,8 +491,14 @@ void Chart::dataDraw() {
             }
             else {
                 if ( pattern[i + 1] != "down" ) {
-                    charCoord[1]--;
-                    drawChar(charCoord[0], charCoord[1], lineChars[2], color);
+                    if ( pattern[i + 1] == "up" ) {
+                        i++;
+                        drawChar(charCoord[0], charCoord[1], lineChars[2], color);
+                    }
+                    else {
+                        charCoord[1]--;
+                        drawChar(charCoord[0], charCoord[1], lineChars[2], color);
+                    }
                 }
                 else {
                     charCoord[1]--;
