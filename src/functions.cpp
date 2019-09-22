@@ -382,6 +382,19 @@ string Chart::getChar(int coordX, int coordY) {
     }
 }
 
+vector<string> removeUpDown(vector<string> input) {
+    vector<string> returnString;
+    for ( int i = 0; i < input.size(); i++) {
+        if ((input[i] == "up" && input[i + 1] == "down") || (input[i] == "down" && input[i + 1] == "up") ) { 
+            i++;
+        }
+        else {
+            returnString.push_back(input[i]);
+        }
+    }
+    return returnString;
+}
+
 void Chart::dataDraw() {
 
     float min =  *( min_element( data.begin(), data.end() ) );
@@ -428,93 +441,72 @@ void Chart::dataDraw() {
         chartSteps.push_back(currentCoord[1]);
     }
 
-    vector<string> pattern = chartPattern(chartSteps);
+    vector<string> pattern = removeUpDown(chartPattern(chartSteps));
     // std::cout << "current coordinate: " << charCoord[0] << ", " << charCoord[1] << endl;
     
-    for ( int i = 0; i < pattern.size(); i++) {
-        std::cout << pattern[i] << " ";
-        
-        bool last = false;
+    for ( int i = 0; i < pattern.size() - 1; i++) {
 
-        if ( i == pattern.size() - 1 ) {
-            last = true;
-        }
+        // cout << pattern[i] << " ";
 
-        if ( pattern[i] == "over" ) {
-            if ( last ) {
-                // cout << "end";
+        if ( pattern[i] == "over" ) {                
+            if (pattern[i + 1] != "up" && pattern[i + 1] != "down" ) {
+                charCoord[0]++;
+                drawChar(charCoord[0], charCoord[1], lineChars[5], color);
             }
             else {
-                
-                if (pattern[i + 1] != "up" && pattern[i + 1] != "down" ) {
-                    charCoord[0]++;
-                    drawChar(charCoord[0], charCoord[1], lineChars[5], color);
+                charCoord[0]++;
+                if ( pattern[i + 1] == "up" ) {
+                    drawChar(charCoord[0], charCoord[1], lineChars[3], color);
                 }
                 else {
-                    charCoord[0]++;
-                    if ( pattern[i + 1] == "up" ) {
-                        drawChar(charCoord[0], charCoord[1], lineChars[3], color);
-                    }
-                    else {
-                        drawChar(charCoord[0], charCoord[1], lineChars[1], color);
-                    }
+                    drawChar(charCoord[0], charCoord[1], lineChars[1], color);
                 }
             }
         }
         else if ( pattern[i] == "up" ) {
-            if ( last ) {
-                cout << "end";
-            }
-            else {
-                if ( pattern[i + 1] != "up" ) {
-                    if ( pattern[ i + 1 ] == "down" ) {
-                        i++;
-                        drawChar(charCoord[0], charCoord[1], lineChars[0], color);
-                    }
-                    else {
-                        charCoord[1]++;
-                        drawChar(charCoord[0], charCoord[1], lineChars[0], color);
-                    }
+            if ( pattern[i + 1] != "up" ) {
+                if ( pattern[ i + 1 ] == "down" ) {
+                    i++;
+                    drawChar(charCoord[0], charCoord[1], lineChars[0], color);
                 }
                 else {
                     charCoord[1]++;
-                    drawChar(charCoord[0], charCoord[1], lineChars[4], color);
+                    drawChar(charCoord[0], charCoord[1], lineChars[0], color);
                 }
+            }
+            else {
+                charCoord[1]++;
+                drawChar(charCoord[0], charCoord[1], lineChars[4], color);
             }
         }
         else if ( pattern[i] == "down" ) {
-            // charCoord[1]--;
-            // drawChar(charCoord[0], charCoord[1], lineChars[2], color);
-
-            if ( last ) {
-                // cout << "end";
-            }
-            else {
-                if ( pattern[i + 1] != "down" ) {
-                    if ( pattern[i + 1] == "up" ) {
-                        i++;
-                        drawChar(charCoord[0], charCoord[1], lineChars[2], color);
-                    }
-                    else {
-                        charCoord[1]--;
-                        drawChar(charCoord[0], charCoord[1], lineChars[2], color);
-                    }
+            cout << "down " << i << endl;
+            if ( pattern[i + 1] != "down" ) {
+                if ( pattern[i + 1] == "up" ) {
+                    // i++;
+                    charCoord[1]--;
+                    drawChar(charCoord[0], charCoord[1], lineChars[2], color);
                 }
                 else {
                     charCoord[1]--;
-                    drawChar(charCoord[0], charCoord[1], lineChars[4], color);
+                    drawChar(charCoord[0], charCoord[1], lineChars[2], color);
                 }
             }
+            else {
+                charCoord[1]--;
+                drawChar(charCoord[0], charCoord[1], lineChars[4], color);
+            }  
         }
 
         // cout << "current coordinate: " << charCoord[0] << ", " << charCoord[1] << endl;
-
-
         // if ( i + 1 == pattern.size() ) {
         //     cout << "LAST STEP";
         // }
     }
-        // Chart::draw(height, width);
+
+    // HANDLE LAST CHAR HERE BASED ON PREVIOUS CHAR:
+    //===============================================
+    cout << pattern[pattern.size() - 1] << endl;
 
     
     // drawChar(charCoord[0], charCoord[1], "t", color);
