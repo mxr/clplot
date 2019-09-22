@@ -465,14 +465,8 @@ void Chart::dataDraw() {
         }
         else if ( pattern[i] == "up" ) {
             if ( pattern[i + 1] != "up" ) {
-                if ( pattern[ i + 1 ] == "down" ) {
-                    i++;
-                    drawChar(charCoord[0], charCoord[1], lineChars[0], color);
-                }
-                else {
-                    charCoord[1]++;
-                    drawChar(charCoord[0], charCoord[1], lineChars[0], color);
-                }
+                charCoord[1]++;
+                drawChar(charCoord[0], charCoord[1], lineChars[0], color);
             }
             else {
                 charCoord[1]++;
@@ -480,33 +474,30 @@ void Chart::dataDraw() {
             }
         }
         else if ( pattern[i] == "down" ) {
-            cout << "down " << i << endl;
             if ( pattern[i + 1] != "down" ) {
-                if ( pattern[i + 1] == "up" ) {
-                    // i++;
-                    charCoord[1]--;
-                    drawChar(charCoord[0], charCoord[1], lineChars[2], color);
-                }
-                else {
-                    charCoord[1]--;
-                    drawChar(charCoord[0], charCoord[1], lineChars[2], color);
-                }
+                charCoord[1]--;
+                drawChar(charCoord[0], charCoord[1], lineChars[2], color);
             }
             else {
                 charCoord[1]--;
                 drawChar(charCoord[0], charCoord[1], lineChars[4], color);
             }  
         }
-
-        // cout << "current coordinate: " << charCoord[0] << ", " << charCoord[1] << endl;
-        // if ( i + 1 == pattern.size() ) {
-        //     cout << "LAST STEP";
-        // }
     }
 
     // HANDLE LAST CHAR HERE BASED ON PREVIOUS CHAR:
     //===============================================
-    cout << pattern[pattern.size() - 1] << endl;
+    if ( pattern[pattern.size() - 1] == "down" ) {
+        charCoord[1]--;
+        drawChar(charCoord[0], charCoord[1], lineChars[2], color);
+    }
+    else if ( pattern[pattern.size() - 1] == "up" ) {
+        charCoord[1]++;
+        drawChar(charCoord[0], charCoord[1], lineChars[0], color);
+    }
+    else {
+        drawChar(charCoord[0], charCoord[1], lineChars[5], color);
+    }
 
     
     // drawChar(charCoord[0], charCoord[1], "t", color);
