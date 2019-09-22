@@ -212,7 +212,7 @@ int main(int argc, char *argv[]) {
     //===================================================
     for (int i = 1; i < argc; i++) {
         
-        if ( argv[i] == string("-d")) {
+        if ( argv[i] == string("-d") || argv[i] == string("--data")) {
             if (dataSet) {
                 cout << "chart: \e[91merror: \e[0mMultiple data series is not supported yet. Call the program with only one instance of the \e[93m-d\e0m flag." << endl;
                 return 1;
@@ -228,7 +228,7 @@ int main(int argc, char *argv[]) {
             
             dataSet = true;
         }
-        else if (argv[i] == string("-t")) {
+        else if (argv[i] == string("-t") || argv[i] == string("--type")) {
             if (typeSet) {
                 cout << "chart: \e[91merror: \e[0mOnly one chart type can be used. Use only one instance of the -t flag." << endl;
                 return 1;
@@ -245,10 +245,10 @@ int main(int argc, char *argv[]) {
             
             typeSet = true;
         }
-        else if (argv[i] == string("-s")) {
+        else if (argv[i] == string("-s") || argv[i] == string("--sparkline")) {
             sparkline = true;
         }
-        else if (argv[i] == string("-h")) {
+        else if (argv[i] == string("-h") || argv[i] == string("--height")) {
             if (heightSet) {
                 cout << "chart: \e[91merror: \e[0mHeight can only be set once" << endl;
                 return 1;
@@ -264,7 +264,7 @@ int main(int argc, char *argv[]) {
             
             heightSet = true;
         }
-        else if (argv[i] == string("-c")) {
+        else if (argv[i] == string("-c") || argv[i] == string("--color")) {
             // cout << "color" << endl;
             if (colorSet) {
                 cout << "chart: \e[91merror: \e[Color can only be set once" << endl;
@@ -281,7 +281,7 @@ int main(int argc, char *argv[]) {
             
             colorSet = true;
         }
-        else if (argv[i] == string("-w")) {
+        else if (argv[i] == string("-w") || argv[i] == string("--width")) {
             if (widthSet) {
                 cout << "chart: \e[91merror: \e[0mWidth can only be set once" << endl;
                 return 1;
@@ -297,7 +297,7 @@ int main(int argc, char *argv[]) {
             
             widthSet = true;
         }
-        else if (argv[i] == string("-p")) {
+        else if (argv[i] == string("-p") || argv[i] == string("--position")) {
             if (posSet) {
                 cout << "chart: \e[91merror: \e[0mWidth can only be set once" << endl;
                 return 1;
@@ -327,6 +327,10 @@ int main(int argc, char *argv[]) {
             
             posSet = true;
         }
+        else if ( argv[i] == string("-h") || argv[i] == string("--help") ) {
+            system("printf \"$(cat man)\" | less -r");
+            return 1;
+        }
 
     }
 
@@ -352,8 +356,10 @@ int main(int argc, char *argv[]) {
     chart.addData(dataStr, lines, cols);
     chart.addColor(color);    
     chart.winSet(chartHeight, chartWidth, posX, posY, lines, cols);
-    chart.dataDraw();
-
+    
+    if ( chart.getType() == "line" ) {
+        chart.lineDataDraw();
+    }
 
     if ( !sparkline ) {
         // chart.label();
