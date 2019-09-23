@@ -11,9 +11,12 @@ git clone https://github.com/k-vernooy/clplot
 make
 make install
 ```
-### Brew install:
+### Homebrew install:
 
-Coming soon...
+```bash
+brew tap k-vernooy/tap
+brew install clplot
+```
 
 ## Usage
 <b>clplot</b> comes with many options for style, customization, and chart types.
@@ -34,6 +37,7 @@ Coming soon...
 ## See also
 
 - [fast](github.com/k-vernooy/fast): an implementation of cplot that monitors internet speed.
+<!-- ![test](https://i.stack.imgur.com/Yopoa.png) -->
 - [stonks](github.com/k-vernooy/stonks): a stock monitoring terminal app that uses clplot to give graphs.
 - [k-vernooy.github.io/projects/clplot](https://k-vernooy.github.io/projects/clplot) - a page with full documentation and example usages and quick projects for clplot.
 
