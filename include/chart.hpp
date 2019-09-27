@@ -5,39 +5,46 @@ using namespace std;
     
 class Chart {
 
-  vector<string> lineChars = { "╭", "╮", "╰", "╯", "│", "─" };
-  // vector<string> lineChars = { "╔", "╗", "╚", "╝", "║", "═" };
+    vector<string> lineChars = { "╭", "╮", "╰", "╯", "│", "─" };
+    // vector<string> lineChars = { "╔", "╗", "╚", "╝", "║", "═" };
 
-  int width;
-  int height;
-  int posY;
-  int posX;
-  int chartCharWidth;
-  int chartCharHeight;
+    int width;
+    int height;
+    int posY;
+    int posX;
+    int chartCharWidth;
+    int chartCharHeight;
 
-  string color;
-  string type;
-  vector<float> data;
+    string color;
+    string type;
+    vector<float> data;
 
-  vector<vector<string> > window;
+    vector<vector<string> > window;
 
-public:
+    public:
 
-    void addType(string type);
-    string getType();
+        class Data {
+            vector<float> data;
+            float min;
+            float max;
+        };
 
-    void addColor(string newColor);
+        void addType(string type);
+        string getType();
 
-    void addData(string data, int lines, int cols);
-    vector<float> getData();
+        void addColor(string newColor);
 
-    void winSet(int height, int width, int posX, int posY, int termHeight, int termWidth);
-    void draw(int termHeight, int termWidth);
-    void drawChar(int coordX, int coordY, string content, string color);
-    void label();
-    void move();
-    string getChar(int coordX, int coordY);
+        void addData(string data, int lines, int cols);
+        vector<float> getData();
 
-    void lineDataDraw();
-    vector<string> lineChartPattern(vector<float> steps);
+        void winSet(int height, int width, int posX, int posY, int termHeight, int termWidth);
+        void draw(int termHeight, int termWidth);
+        void drawChar(int coordX, int coordY, string content, string color);
+        void label();
+        void move();
+        string getChar(int coordX, int coordY);
+
+        void lineDataDraw();
+        void barDataDraw();
+        vector<string> lineChartPattern(vector<float> steps);
 };

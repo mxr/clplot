@@ -200,6 +200,10 @@ void Chart::drawChar(int coordX, int coordY, string content, string color) {
     }
 }
 
+void Chart::barDataDraw() {
+
+}
+
 vector<string> Chart::lineChartPattern(vector<float> steps) {
     vector<string> returnVec;
     bool lastRound = false;
@@ -505,74 +509,6 @@ void Chart::lineDataDraw() {
         charCoord[1]++;
         drawChar(charCoord[0], charCoord[1], lineChars[0], color);
     }
-    // else {
-    //     drawChar(charCoord[0], charCoord[1], lineChars[5], color);
-    // }
-
-    
-    // drawChar(charCoord[0], charCoord[1], "t", color);
-    //     string addChar;
-    //     int increment[2] = {0,0};
-    //     if ( pattern[i] == 1 && pattern[i + 1] == 1) {
-    //         addChar = lineChars[5];
-    //         increment[0] = 1;
-
-    //         // increment curCoordinate
-    //     }
-    //     else if ( pattern[i] == 1 && pattern[i + 1] == 2) {
-    //         addChar = lineChars[3];
-    //         increment[0] = 1;
-    //         increment[1] = 1;
-
-    //         // increment curCoordinate
-
-    //     }
-    //     else if ( pattern[i] == 1 && pattern[i + 1] == 3) {
-    //         addChar = lineChars[1];
-    //         increment[0] = 1;
-    //         increment[1] = -1;
-
-    //         // increment curCoordinate
-
-    //     }
-    //     else if ( pattern[i] == 2 && pattern[i + 1] == 1) {
-    //         addChar = lineChars[0];
-    //         increment[0] = 1;
-    //         increment[1] = 1;
-    //         // increment curCoordinate
-
-    //     }
-    //     else if ( pattern[i] == 2 && pattern[i + 1] == 2) {
-    //         addChar = lineChars[4];
-    //         increment[0] = 2;
-    //         // increment curCoordinate
-
-    //     }
-    //     else if ( pattern[i] == 3 && pattern[i + 1] == 1) {
-    //         addChar = lineChars[2];
-    //         increment[0] = 1;
-    //         increment[1] = -1;
-    //         // increment curCoordinate
-    //     }
-    //     else if ( pattern[i] == 3 && pattern[i + 1] == 3) {
-    //         addChar = lineChars[4];
-    //         increment[1] = -2;
-    //         // increment curCoordinate
-    //     }
-    //     cout << addChar;
-
-    //     // drawChar(charCoord[0],charCoord[1],addChar);
-
-    //     charCoord[0] += increment[0];
-    //     charCoord[1] += increment[1];
-
-    //     // draw based on curCoordinate and addChar
-    // }
-    // window[15][1] = "t";
-    // int bottomLeftCoord[2];
-    // bottomLeftCoord[0] = posX + 1;
-    // bottomLeftCoord[1] = posY + chartCharHeight - 2;
-
-    // window[bottomLeftCoord[1]][bottomLeftCoord[0]] = "\e[31m┐\e[0m";
-
 }
+
+Chart::Data::Data()
