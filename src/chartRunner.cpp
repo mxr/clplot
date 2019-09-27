@@ -1,12 +1,13 @@
 #include <iostream>
 #include "../include/chart.hpp"
 #include <sys/ioctl.h>
-#include <stdio.h>
 #include <unistd.h>
 #include <sstream> 
 #include <map>
 #include <string.h>
 #include <ctype.h>
+#include <cstdlib>  
+#include <random>
 
 using namespace std;
 
@@ -88,6 +89,9 @@ bool colorCheck(string colors) {
         return false;
     }
     else {
+        if (colors == "rand[]" ) {
+            return true;
+        }
         string search = lower(colors);
         if ( colorList.find(search) == colorList.end() ) {
             return false;
@@ -122,6 +126,14 @@ string getColor(string colors) {
         { "light purple", 13 } 
     }; 
 
+
+    vector<int> randVec = {0,1,2,3,4,5,6,8,15,208,9,214,11,10,12,14,13};
+    random_device random_device;
+    mt19937 engine{random_device()};
+    uniform_int_distribution<int> dist(0, randVec.size() - 1);
+    int random_element = randVec[dist(engine)];
+
+
     int colorNum = 15;
     string colorString;
     string search;
@@ -132,8 +144,14 @@ string getColor(string colors) {
         }
     }
     else {
-        search = lower(colors);
-        colorNum = colorList[search];
+        if ( colors == "rand[]" ) {
+            colorNum = random_element;
+        }
+        else {
+            search = lower(colors);
+            colorNum = colorList[search];
+        }
+
     }
 
     colorString += "\e[38;5;";
@@ -200,6 +218,7 @@ int main(int argc, char *argv[]) {
     int posX = 0;
     int posY = 0;
 
+    string usageScreen = "clplot: usage: clplot [-chtw]";
     string color = "\e[38;5;15m";
 
     string chartType = "line";
@@ -331,6 +350,14 @@ int main(int argc, char *argv[]) {
             system("printf \"$(cat man)\" | less -r");
             return 1;
         }
+        else  {
+            vector<string> args = { "-d", "-t", "-c", "-h", "-w", "-p", "--data", "--type", "--color", "--height", "--width", "--position" };
+            if (!( find(args.begin(), args.end(), argv[i - 1]) != args.end() )) {
+                cout << "chart: \e[91merror: \e[0m\"\e[33m" << argv[i] << "\e[0m\" is not a recognized argument.\nArguments and values must be separated by spaces." << endl;
+                cout << usageScreen << endl;
+                return 1;
+            }
+        }
 
     }
 
@@ -359,6 +386,10 @@ int main(int argc, char *argv[]) {
     
     if ( chart.getType() == "line" ) {
         chart.lineDataDraw();
+    }
+
+    else if ( chart.getType() == "bar" ) {
+        chart.barDataDraw();
     }
 
     if ( !sparkline ) {
