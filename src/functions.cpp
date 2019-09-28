@@ -36,7 +36,6 @@ void Chart::addData(string newData, int lines, int cols) {
         data.push_back(addFloat);
 
         newStrData.erase(0, pos + delimiter.length());
-
         dataNum++;
     }
 
@@ -55,6 +54,7 @@ vector<float> Chart::getData() {
 
     for ( int i = 0; i < data.size(); i++) {
         returnV.push_back(data[i]);
+        cout << data[i] << endl;
     } 
     return returnV;
 }
@@ -222,7 +222,6 @@ vector<string> Chart::lineChartPattern(vector<float> steps) {
         if ( i != steps.size() - 2  ) {
             int up = (y2 - y1);
             int over = (x2 - x1);
-                                // cout << "got here " << i << endl;
 
             // // cout << "up " << up << " over " << over << endl;
             // if ( up > 0 ) {
@@ -509,6 +508,5 @@ void Chart::lineDataDraw() {
         charCoord[1]++;
         drawChar(charCoord[0], charCoord[1], lineChars[0], color);
     }
-}
 
-Chart::Data::Data()
+}

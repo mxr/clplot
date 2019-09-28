@@ -4,30 +4,25 @@
 using namespace std;
     
 class Chart {
+    public: 
 
-    vector<string> lineChars = { "╭", "╮", "╰", "╯", "│", "─" };
-    // vector<string> lineChars = { "╔", "╗", "╚", "╝", "║", "═" };
+        vector<string> lineChars = { "╭", "╮", "╰", "╯", "│", "─" };
+        // vector<string> lineChars = { "╔", "╗", "╚", "╝", "║", "═" };
 
-    int width;
-    int height;
-    int posY;
-    int posX;
-    int chartCharWidth;
-    int chartCharHeight;
+        int width;
+        int height;
+        int posY;
+        int posX;
+        int chartCharWidth;
+        int chartCharHeight;
 
-    string color;
-    string type;
-    vector<float> data;
+        string color;
+        string type;
+        vector<float> data;
 
-    vector<vector<string> > window;
+        vector<vector<string> > window;
 
     public:
-
-        class Data {
-            vector<float> data;
-            float min;
-            float max;
-        };
 
         void addType(string type);
         string getType();

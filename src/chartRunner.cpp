@@ -29,6 +29,7 @@ string lower(string one) {
     return returnstring;
 }
 
+// TODO: UPDATE CHECK TO MAKE SURE DATA IS FLOAT/INT
 bool dataCheck(string dataStr) {
     string b1 = dataStr.substr(0,1);
     string b2 =  dataStr.substr(dataStr.length() - 1,1);
@@ -369,6 +370,7 @@ int main(int argc, char *argv[]) {
         }
         if (newData != "") {
             dataStr = "[" + newData + "]";
+            dataCheck(dataStr);
         }
         else {
             cout << "chart: \e[91merror: \e[0mData must be passed to chart with the -d flag. See the readme for more information." << endl;
