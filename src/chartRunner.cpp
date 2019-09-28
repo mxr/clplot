@@ -5,6 +5,7 @@
 #include <sstream> 
 #include <map>
 #include <string.h>
+#include <string>
 #include <ctype.h>
 #include <cstdlib>  
 #include <random>
@@ -194,13 +195,18 @@ void chartTypes() {
 int main(int argc, char *argv[]) {
     
     // Define the window size
-    //====================
+    //==================== 
+
+
     int cols, lines;
 
-    struct ttysize twh;
-    ioctl(1, TIOCGSIZE, &twh);
-    cols = twh.ts_cols;
-    lines = twh.ts_lines;
+    struct winsize size;
+    ioctl(STDOUT_FILENO,TIOCGWINSZ,&size);
+
+    lines = size.ws_row;
+    cols = size.ws_col;
+
+    cout << lines << ", " << cols << endl;
 
     bool dataSet = false;
     bool typeSet = false;
@@ -408,5 +414,5 @@ int main(int argc, char *argv[]) {
 
     chart.draw(lines,cols);
     
-    return 0;
+    // return 0;
 }
