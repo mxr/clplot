@@ -196,11 +196,10 @@ int main(int argc, char *argv[]) {
     //====================
     int cols, lines;
 
-    struct ttysize ts;
-    ioctl(STDIN_FILENO, TIOCGSIZE, &ts);
-    cols = ts.ts_cols;
-    lines = ts.ts_lines;
-
+    struct ttysize twh;
+    ioctl(1, TIOCGSIZE, &twh);
+    cols = twh.ts_cols;
+    lines = twh.ts_lines;
 
     bool dataSet = false;
     bool typeSet = false;
@@ -218,7 +217,7 @@ int main(int argc, char *argv[]) {
     int posX = 0;
     int posY = 0;
 
-    string usageScreen = "clplot: usage: clplot [-chtw]";
+    string usageScreen = "usage: clplot [-s] -d data";
     string color = "\e[38;5;15m";
 
     string chartType = "line";
@@ -364,8 +363,17 @@ int main(int argc, char *argv[]) {
     // todo - make this the first error test
 
     if ( dataStr == "" ) {
-        cout << "chart: \e[91merror: \e[0mData must be passed to chart with the -d flag. See the readme for more information." << endl;
-        return 1;
+        string newData;
+        for (string line; getline(std::cin, line);) {
+            newData+=line;
+        }
+        if (newData != "") {
+            dataStr = "[" + newData + "]";
+        }
+        else {
+            cout << "chart: \e[91merror: \e[0mData must be passed to chart with the -d flag. See the readme for more information." << endl;
+            return 1;        
+        }
     }
 
 
@@ -381,13 +389,13 @@ int main(int argc, char *argv[]) {
 
     chart.addType(chartType);
     chart.addData(dataStr, lines, cols);
-    chart.addColor(color);    
+    chart.addColor(color);
+
     chart.winSet(chartHeight, chartWidth, posX, posY, lines, cols);
-    
+
     if ( chart.getType() == "line" ) {
         chart.lineDataDraw();
     }
-
     else if ( chart.getType() == "bar" ) {
         chart.barDataDraw();
     }
@@ -397,5 +405,6 @@ int main(int argc, char *argv[]) {
     } 
 
     chart.draw(lines,cols);
-
+    
+    return 0;
 }
