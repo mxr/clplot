@@ -179,24 +179,54 @@ void Chart::draw(int termHeight, int termWidth) {
 }
 
 void Chart::drawChar(int coordX, int coordY, string content, string color) {
-    coordX--;
-    coordY--;
+    bool test = false;
+    if ( test ) {
+        coordX--;
+        coordY--;
 
-    int bl[2];
+        int bl[2];
 
-    bl[1] = posX + 1; 
-    bl[0] = posY + chartCharHeight - 2;
+        bl[1] = posX + 1; 
+        bl[0] = posY + chartCharHeight - 2;
 
-    int coord[2] = {bl[0] - coordY, bl[1] + coordX};
+        int coord[2] = {bl[0] - coordY, bl[1] + coordX};
 
-    // cout << "Adding " << content << " at " << coord[1] << ", " << coord[0] << endl;
-    // cout << "window size: " << window.size() << ", " << window[0].size() << endl;
+        // cout << "Adding " << content << " at " << coord[1] << ", " << coord[0] << endl;
+        if ( coord[0] < 0 ) {
+            // cout << "Something went wrong" << endl;
+        }
+        else {
+            // cout << "start: " << coord[0] << ", end: " << posY + chartCharHeight + 1 << endl;
+            // window[coord[0]][coord[1]] = color + content + "\e[0m";
+            for ( int i = coord[0] + 1; i < (posY + chartCharHeight - 1); i++) {
+                if ( window[i][coord[1]] == " " ) {
+                    window[i][coord[1]] = color + "█" + "\e[0m";
+                }
+            }
+            window[coord[0]][coord[1]] = color + content + "\e[0m";
 
-    if ( coord[0] < 0 ) {
-        // cout << "Something went wrong" << endl;
+        }
     }
     else {
-        window[coord[0]][coord[1]] = color + content + "\e[0m";
+        coordX--;
+        coordY--;
+
+        int bl[2];
+
+        bl[1] = posX + 1; 
+        bl[0] = posY + chartCharHeight - 2;
+
+        int coord[2] = {bl[0] - coordY, bl[1] + coordX};
+
+        // cout << "Adding " << content << " at " << coord[1] << ", " << coord[0] << endl;
+        // cout << "window size: " << window.size() << ", " << window[0].size() << endl;
+
+        if ( coord[0] < 0 ) {
+            // cout << "Something went wrong" << endl;
+        }
+        else {
+            window[coord[0]][coord[1]] = color + content + "\e[0m";
+        }
     }
 }
 
