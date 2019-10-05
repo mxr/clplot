@@ -206,7 +206,7 @@ int main(int argc, char *argv[]) {
     lines = size.ws_row;
     cols = size.ws_col;
 
-    cout << lines << ", " << cols << endl;
+    // cout << lines << ", " << cols << endl;
 
     bool dataSet = false;
     bool typeSet = false;
@@ -216,10 +216,11 @@ int main(int argc, char *argv[]) {
     bool posSet = false;
 
     bool sparkline = false;
+    bool areachart = false;
 
     int dataCount;
     int typeCount;
-    int chartHeight = lines - 2;
+    int chartHeight = lines - 1;
     int chartWidth = cols - 1;
     int posX = 0;
     int posY = 0;
@@ -269,6 +270,9 @@ int main(int argc, char *argv[]) {
             }
             
             typeSet = true;
+        }
+        else if (argv[i] == string("-a") || argv[i] == string("--area")) {
+            areachart = true;
         }
         else if (argv[i] == string("-s") || argv[i] == string("--sparkline")) {
             sparkline = true;
@@ -324,7 +328,7 @@ int main(int argc, char *argv[]) {
         }
         else if (argv[i] == string("-p") || argv[i] == string("--position")) {
             if (posSet) {
-                cout << "chart: \e[91merror: \e[0mWidth can only be set once" << endl;
+                cout << "chart: \e[91merror: \e[0mPosition can only be set once" << endl;
                 return 1;
             }
 
@@ -384,6 +388,10 @@ int main(int argc, char *argv[]) {
         }
     }
 
+    if ( areachart && chartType != "line" ) {
+        cout << "chart: \e[91merror: \e[0mThe \e[93marea\e[0m chart option can only be used with the \e[93mline\e[0m chart type. \nUse \e[93m-t 'line'\e[0m instead of \e[93m-t '" << chartType << "'\e[0m." << endl;
+    }
+
 
     // increment positions to allow room for scales (if sparkline option not set)
     posY++;
@@ -394,12 +402,10 @@ int main(int argc, char *argv[]) {
     // Create chart object
     //====================
     if ( chartType == "line" ) {
-        Linechart chart;
-        
-        chart.addType(chartType);
-        chart.addData(dataStr, lines, cols);
-        chart.addColor(color);
-        chart.winSet(chartHeight, chartWidth, posX, posY, lines, cols);
+
+        Linechart chart(chartType, dataStr, lines, cols, color, areachart);
+
+        chart.winSet(chartHeight, chartWidth, posX, posY);
         chart.dataDraw();
 
         if ( !sparkline ) {
