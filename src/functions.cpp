@@ -103,13 +103,13 @@ void Chart::winSet(int height, int width, int positionX, int positionY, int term
                 //========================================
                 for ( int j = 0; j <= termWidth; j++ ) {
                     if ( j == tl[0] ) {
-                        row.push_back(lineChars[0]);
+                        row.push_back(winChars[0]);
                     }
                     else if ( j == tr[0]) {
-                        row.push_back(lineChars[1]);
+                        row.push_back(winChars[1]);
                     }
                     else if ( j > tl[0] && j < tr[0] ){
-                        row.push_back(lineChars[5]);
+                        row.push_back(winChars[5]);
                     }
                     else {
                         row.push_back(" ");
@@ -122,7 +122,7 @@ void Chart::winSet(int height, int width, int positionX, int positionY, int term
                 //================================================
                 for ( int j = 0; j <= termWidth; j++) {
                     if ( j == tl[0] || j == tr[0] ) {
-                        row.push_back(lineChars[4]);
+                        row.push_back(winChars[4]);
                     }
                     else {
                         row.push_back(" ");
@@ -135,13 +135,13 @@ void Chart::winSet(int height, int width, int positionX, int positionY, int term
                 //===================================
                 for ( int j = 0; j <= termWidth; j++ ) {
                     if ( j == tl[0] ) {
-                        row.push_back(lineChars[2]);
+                        row.push_back(winChars[2]);
                     }
                     else if ( j == tr[0]) {
-                        row.push_back(lineChars[3]);
+                        row.push_back(winChars[3]);
                     }
                     else if ( j > tl[0] && j < tr[0] ){
-                        row.push_back(lineChars[5]);
+                        row.push_back(winChars[5]);
                     }
                     else {
                         row.push_back(" ");
@@ -172,9 +172,9 @@ void Chart::draw(int termHeight, int termWidth) {
     
     for ( int j = 0; j < termHeight; j++ ) {
         for ( int k = 0; k < chartCharWidth + posX; k++ ) {
-            std::cout << window[j][k];
+            cout << window[j][k];
         }
-        std::cout << endl;
+        cout << endl;
     } 
 }
 
@@ -230,11 +230,11 @@ void Chart::drawChar(int coordX, int coordY, string content, string color) {
     }
 }
 
-void Chart::barDataDraw() {
+void Barchart::dataDraw() {
 
 }
 
-vector<string> Chart::lineChartPattern(vector<float> steps) {
+vector<string> Linechart::pattern(vector<float> steps) {
     vector<string> returnVec;
     bool lastRound = false;
     for ( int i = 0; i < steps.size(); i = i + 2) {
@@ -370,7 +370,7 @@ vector<string> Chart::lineChartPattern(vector<float> steps) {
     return returnVec;
 }
 
-void Chart::label() {
+void Linechart::label() {
     vector<int> tl = { posX, posY };
     vector<int> tr = { posX + chartCharWidth - 1, posY };
     vector<int> bl = { posX, posY + chartCharHeight - 1 };
@@ -438,15 +438,15 @@ vector<string> removeUpDown(vector<string> input) {
     return returnString;
 }
 
-void Chart::lineDataDraw() {
+void Linechart::dataDraw() {
 
     float min =  *( min_element( data.begin(), data.end() ) );
     float max =  *( max_element( data.begin(), data.end() ) );
     float range = ( max - min );
 
     float horSteps = (chartCharWidth - 3) / (data.size() - 1);
-    float verStepsData = range / (Chart::chartCharHeight - 3);
-    float verStepsChart = (Chart::chartCharHeight - 3) / range;
+    float verStepsData = range / (chartCharHeight - 3);
+    float verStepsChart = (chartCharHeight - 3) / range;
 
     float currentCoord[2];
     float charCoord[2];
@@ -484,7 +484,7 @@ void Chart::lineDataDraw() {
         chartSteps.push_back(currentCoord[1]);
     }
 
-    vector<string> pattern = removeUpDown(lineChartPattern(chartSteps));
+    vector<string> pattern = removeUpDown(Linechart::pattern(chartSteps));
     // std::cout << "current coordinate: " << charCoord[0] << ", " << charCoord[1] << endl;
     
     for ( int i = 0; i < pattern.size() - 1; i++) {
@@ -494,36 +494,36 @@ void Chart::lineDataDraw() {
         if ( pattern[i] == "over" ) {                
             if (pattern[i + 1] != "up" && pattern[i + 1] != "down" ) {
                 charCoord[0]++;
-                drawChar(charCoord[0], charCoord[1], lineChars[5], color);
+                drawChar(charCoord[0], charCoord[1], Linechart::chars[5], color);
             }
             else {
                 charCoord[0]++;
                 if ( pattern[i + 1] == "up" ) {
-                    drawChar(charCoord[0], charCoord[1], lineChars[3], color);
+                    drawChar(charCoord[0], charCoord[1], Linechart::chars[3], color);
                 }
                 else {
-                    drawChar(charCoord[0], charCoord[1], lineChars[1], color);
+                    drawChar(charCoord[0], charCoord[1], Linechart::chars[1], color);
                 }
             }
         }
         else if ( pattern[i] == "up" ) {
             if ( pattern[i + 1] != "up" ) {
                 charCoord[1]++;
-                drawChar(charCoord[0], charCoord[1], lineChars[0], color);
+                drawChar(charCoord[0], charCoord[1], Linechart::chars[0], color);
             }
             else {
                 charCoord[1]++;
-                drawChar(charCoord[0], charCoord[1], lineChars[4], color);
+                drawChar(charCoord[0], charCoord[1], Linechart::chars[4], color);
             }
         }
         else if ( pattern[i] == "down" ) {
             if ( pattern[i + 1] != "down" ) {
                 charCoord[1]--;
-                drawChar(charCoord[0], charCoord[1], lineChars[2], color);
+                drawChar(charCoord[0], charCoord[1], Linechart::chars[2], color);
             }
             else {
                 charCoord[1]--;
-                drawChar(charCoord[0], charCoord[1], lineChars[4], color);
+                drawChar(charCoord[0], charCoord[1], Linechart::chars[4], color);
             }  
         }
     }
@@ -532,11 +532,11 @@ void Chart::lineDataDraw() {
     //===============================================
     if ( pattern[pattern.size() - 1] == "down" ) {
         charCoord[1]--;
-        drawChar(charCoord[0], charCoord[1], lineChars[2], color);
+        drawChar(charCoord[0], charCoord[1], Linechart::chars[2], color);
     }
     else if ( pattern[pattern.size() - 1] == "up" ) {
         charCoord[1]++;
-        drawChar(charCoord[0], charCoord[1], lineChars[0], color);
+        drawChar(charCoord[0], charCoord[1], Linechart::chars[0], color);
     }
 
 }
