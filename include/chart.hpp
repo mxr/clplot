@@ -7,7 +7,9 @@ class Chart {
     public: 
 
         vector<string> lineChars = { "╭", "╮", "╰", "╯", "│", "─" };
-        // vector<string> lineChars = { "╔", "╗", "╚", "╝", "║", "═" };
+        vector<string> lineCharsBold = { "╔", "╗", "╚", "╝", "║", "═" };
+        vector<string> lineCharsArea = { "▗", "▖", "▙", "▟" , "▐" , "▄" };
+        vector<string> sharpLineChars = { "┌", "┐", "└", "┘", "│", "─" };
 
         int width;
         int height;
