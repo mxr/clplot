@@ -393,26 +393,25 @@ int main(int argc, char *argv[]) {
 
     // Create chart object
     //====================
-    Chart chart;
+    if ( chartType == "line" ) {
+        Linechart chart;
+        
+        chart.addType(chartType);
+        chart.addData(dataStr, lines, cols);
+        chart.addColor(color);
+        chart.winSet(chartHeight, chartWidth, posX, posY, lines, cols);
+        chart.dataDraw();
 
-    chart.addType(chartType);
-    chart.addData(dataStr, lines, cols);
-    chart.addColor(color);
+        if ( !sparkline ) {
+            // chart.label();
+        } 
 
-    chart.winSet(chartHeight, chartWidth, posX, posY, lines, cols);
-
-    if ( chart.getType() == "line" ) {
-        chart.lineDataDraw();
+        chart.draw(lines,cols);
     }
-    else if ( chart.getType() == "bar" ) {
-        chart.barDataDraw();
+    else if ( chartType == "bar" ) {
+        Barchart chart;
     }
 
-    if ( !sparkline ) {
-        // chart.label();
-    } 
-
-    chart.draw(lines,cols);
     
     // return 0;
 }
