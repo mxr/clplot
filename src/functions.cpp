@@ -4,15 +4,15 @@
 #include <sstream>
 using namespace std;
 
-string Chart::getType() {
-    return type;
-}
 
-void Chart::addType(string newType) {
+// linechart constructor
+Linechart::Linechart(string newType, string newData, int lines, int cols, string newColor, bool areachart) {
+    // add area chart
+    area = areachart;
+    // add chart type
     type = newType;
-}
 
-void Chart::addData(string newData, int lines, int cols) {
+    // add chart data
     int size = 0; 
     while (newData[size] != '\0') { 
         ++size; 
@@ -47,6 +47,12 @@ void Chart::addData(string newData, int lines, int cols) {
     height = lines;
     width = cols;
 
+    // add chart color
+    color = newColor;
+}
+
+string Chart::getType() {
+    return type;
 }
 
 vector<float> Chart::getData() {
@@ -59,28 +65,29 @@ vector<float> Chart::getData() {
     return returnV;
 }
 
-void Chart::addColor(string newColor) {
-    color = newColor;
-}
+void Chart::winSet(int chartheight, int chartwidth, int positionX, int positionY) {
+    int termHeight = height;
+    int termWidth = width;
+    
+    chartCharHeight = chartheight;
+    chartCharWidth = chartwidth;
 
-void Chart::winSet(int height, int width, int positionX, int positionY, int termHeight, int termWidth) {
-    chartCharHeight = height;
-    chartCharWidth = width;
     posX = positionX;
     posY = positionY;
-    if ( height + positionY > termHeight) {
-        std::cout << "chart: \e[31merror:\e[0m The sum of the chart height (\e[93m" << height << "\e[0m) and vertical position (\e[93m" << positionY <<  "\e[0m) is greater than the terminal height (\e[93m" << termHeight << "\e[0m)." << endl;
+
+    if ( chartCharHeight + posY > termHeight) {
+        cout << "chart: \e[31merror:\e[0m The sum of the chart height (\e[93m" << height << "\e[0m) and vertical position (\e[93m" << positionY <<  "\e[0m) is greater than the terminal height (\e[93m" << termHeight << "\e[0m)." << endl;
         exit(1);
     }
-    else if ( width + positionX > termWidth) {
-        std::cout << "chart: \e[31merror:\e[0m The sum of the chart width (\e[93m" << width << "\e[0m) and horizontal position (\e[93m" << positionX <<  "\e[0m) is greater than the terminal width (\e[93m" << termWidth << "\e[0m)." << endl;
+    else if ( chartCharWidth + posX > termWidth) {
+        cout << "chart: \e[31merror:\e[0m The sum of the chart width (\e[93m" << width << "\e[0m) and horizontal position (\e[93m" << positionX <<  "\e[0m) is greater than the terminal width (\e[93m" << termWidth << "\e[0m)." << endl;
         exit(1);
     }
     else {
-        vector<int> tl = { positionX, positionY };
-        vector<int> tr = { positionX + width - 1, positionY };
-        vector<int> bl = { positionX, positionY + height - 1 };
-        vector<int> br = { positionX + width - 1, positionY + height - 1 };
+        vector<int> tl = { posX, posY };
+        vector<int> tr = { posX + chartCharWidth - 1, posY };
+        vector<int> bl = { posX, posY + chartCharHeight - 1 };
+        vector<int> br = { posX + chartCharWidth - 1, posY + chartCharHeight - 1 };
 
         for (int i = 0; i <= termHeight; i++) {
 

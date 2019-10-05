@@ -31,7 +31,7 @@ class Chart {
         vector<float> getData();
 
         // window methods
-        void winSet(int height, int width, int posX, int posY, int termHeight, int termWidth);
+        void winSet(int chartheight, int chartwidth, int positionX, int positionY);
         void move();
 
         // drawing methods
@@ -52,6 +52,9 @@ class Linechart : public Chart {
     bool area;
     
     public:
+    // constructor
+        Linechart(string newType, string newData, int lines, int cols, string newColor, bool areachart);
+
         void label();
         void dataDraw();
         vector<string> pattern(vector<float> steps);
