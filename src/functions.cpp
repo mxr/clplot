@@ -185,9 +185,8 @@ void Chart::draw(int termHeight, int termWidth) {
     } 
 }
 
-void Chart::drawChar(int coordX, int coordY, string content, string color) {
-    bool test = false;
-    if ( test ) {
+void Linechart::drawChar(int coordX, int coordY, string content, string color) {
+    if ( area ) {
         coordX--;
         coordY--;
 
@@ -493,7 +492,14 @@ void Linechart::dataDraw() {
 
     vector<string> pattern = removeUpDown(Linechart::pattern(chartSteps));
     // std::cout << "current coordinate: " << charCoord[0] << ", " << charCoord[1] << endl;
-    
+    vector<string> chosenchars;
+    if ( area ) {
+        chosenchars = charsArea;
+    }
+    else {
+        chosenchars = chars;
+    }
+
     for ( int i = 0; i < pattern.size() - 1; i++) {
 
         // cout << pattern[i] << " ";
@@ -501,36 +507,36 @@ void Linechart::dataDraw() {
         if ( pattern[i] == "over" ) {                
             if (pattern[i + 1] != "up" && pattern[i + 1] != "down" ) {
                 charCoord[0]++;
-                drawChar(charCoord[0], charCoord[1], Linechart::chars[5], color);
+                drawChar(charCoord[0], charCoord[1], chosenchars[5], color);
             }
             else {
                 charCoord[0]++;
                 if ( pattern[i + 1] == "up" ) {
-                    drawChar(charCoord[0], charCoord[1], Linechart::chars[3], color);
+                    drawChar(charCoord[0], charCoord[1], chosenchars[3], color);
                 }
                 else {
-                    drawChar(charCoord[0], charCoord[1], Linechart::chars[1], color);
+                    drawChar(charCoord[0], charCoord[1], chosenchars[1], color);
                 }
             }
         }
         else if ( pattern[i] == "up" ) {
             if ( pattern[i + 1] != "up" ) {
                 charCoord[1]++;
-                drawChar(charCoord[0], charCoord[1], Linechart::chars[0], color);
+                drawChar(charCoord[0], charCoord[1], chosenchars[0], color);
             }
             else {
                 charCoord[1]++;
-                drawChar(charCoord[0], charCoord[1], Linechart::chars[4], color);
+                drawChar(charCoord[0], charCoord[1], chosenchars[4], color);
             }
         }
         else if ( pattern[i] == "down" ) {
             if ( pattern[i + 1] != "down" ) {
                 charCoord[1]--;
-                drawChar(charCoord[0], charCoord[1], Linechart::chars[2], color);
+                drawChar(charCoord[0], charCoord[1], chosenchars[2], color);
             }
             else {
                 charCoord[1]--;
-                drawChar(charCoord[0], charCoord[1], Linechart::chars[4], color);
+                drawChar(charCoord[0], charCoord[1], chosenchars[4], color);
             }  
         }
     }
@@ -539,11 +545,11 @@ void Linechart::dataDraw() {
     //===============================================
     if ( pattern[pattern.size() - 1] == "down" ) {
         charCoord[1]--;
-        drawChar(charCoord[0], charCoord[1], Linechart::chars[2], color);
+        drawChar(charCoord[0], charCoord[1], chosenchars[2], color);
     }
     else if ( pattern[pattern.size() - 1] == "up" ) {
         charCoord[1]++;
-        drawChar(charCoord[0], charCoord[1], Linechart::chars[0], color);
+        drawChar(charCoord[0], charCoord[1], chosenchars[0], color);
     }
 
 }

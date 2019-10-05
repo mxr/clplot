@@ -36,7 +36,6 @@ class Chart {
 
         // drawing methods
         void draw(int termHeight, int termWidth);
-        void drawChar(int coordX, int coordY, string content, string color);
         string getChar(int coordX, int coordY);
 };
 
@@ -54,7 +53,8 @@ class Linechart : public Chart {
     public:
     // constructor
         Linechart(string newType, string newData, int lines, int cols, string newColor, bool areachart);
-
+        
+        void drawChar(int coordX, int coordY, string content, string color);
         void label();
         void dataDraw();
         vector<string> pattern(vector<float> steps);
