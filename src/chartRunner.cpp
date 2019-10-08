@@ -240,7 +240,7 @@ int main(int argc, char *argv[]) {
         
         if ( argv[i] == string("-d") || argv[i] == string("--data")) {
             if (dataSet) {
-                cout << "chart: \e[91merror: \e[0mMultiple data series is not supported yet. Call the program with only one instance of the \e[93m-d\e0m flag." << endl;
+                cout << "clplot: \e[91merror: \e[0mMultiple data series is not supported yet. Call the program with only one instance of the \e[93m-d\e0m flag." << endl;
                 return 1;
             }
             
@@ -248,7 +248,7 @@ int main(int argc, char *argv[]) {
                 dataStr = argv[i + 1];
             }
             else {
-                cout << "chart: \e[91merror: \e[0mThe data \"\e[93m" << argv[i+1] << "\e[0m\"" << " is not in the correct format." << endl;
+                cout << "clplot: \e[91merror: \e[0mThe data \"\e[93m" << argv[i+1] << "\e[0m\"" << " is not in the correct format." << endl;
                 return 1;
             }
             
@@ -256,7 +256,7 @@ int main(int argc, char *argv[]) {
         }
         else if (argv[i] == string("-t") || argv[i] == string("--type")) {
             if (typeSet) {
-                cout << "chart: \e[91merror: \e[0mOnly one chart type can be used. Use only one instance of the -t flag." << endl;
+                cout << "clplot: \e[91merror: \e[0mOnly one chart type can be used. Use only one instance of the -t flag." << endl;
                 return 1;
             }
 
@@ -264,7 +264,7 @@ int main(int argc, char *argv[]) {
                 chartType = argv[i + 1];
             }
             else {
-                cout << "chart: \e[91merror: \e[0m\"" << argv[i+1] << "\"" << " is not a recognized chart type." << endl;
+                cout << "clplot: \e[91merror: \e[0m\"" << argv[i+1] << "\"" << " is not a recognized chart type." << endl;
                 chartTypes();
                 return 1;
             }
@@ -279,7 +279,7 @@ int main(int argc, char *argv[]) {
         }
         else if (argv[i] == string("-h") || argv[i] == string("--height")) {
             if (heightSet) {
-                cout << "chart: \e[91merror: \e[0mHeight can only be set once" << endl;
+                cout << "clplot: \e[91merror: \e[0mHeight can only be set once" << endl;
                 return 1;
             }
 
@@ -287,7 +287,7 @@ int main(int argc, char *argv[]) {
                 chartHeight = stoi(argv[i + 1]);
             }
             else {
-                cout << "chart: \e[91merror: \e[0mThe height must be an integer number of lines between 5 and the terminal height, " << lines << "." << endl;
+                cout << "clplot: \e[91merror: \e[0mThe height must be an integer number of lines between 5 and the terminal height, " << lines << "." << endl;
                 return 1;
             }
             
@@ -296,7 +296,7 @@ int main(int argc, char *argv[]) {
         else if (argv[i] == string("-c") || argv[i] == string("--color")) {
             // cout << "color" << endl;
             if (colorSet) {
-                cout << "chart: \e[91merror: \e[Color can only be set once" << endl;
+                cout << "clplot: \e[91merror: \e[0mColor can only be set once" << endl;
                 return 1;
             }
 
@@ -304,7 +304,7 @@ int main(int argc, char *argv[]) {
                 color = getColor(argv[i + 1]);
             }
             else {
-                cout << "chart: \e[91merror: \"\e[93m" << argv[i + 1] << "\e[0m\" is not recognized as a color." << endl;
+                cout << "clplot: \e[91merror: \"\e[93m" << argv[i + 1] << "\e[0m\" is not recognized as a color." << endl;
                 return 1;
             }
             
@@ -312,7 +312,7 @@ int main(int argc, char *argv[]) {
         }
         else if (argv[i] == string("-w") || argv[i] == string("--width")) {
             if (widthSet) {
-                cout << "chart: \e[91merror: \e[0mWidth can only be set once" << endl;
+                cout << "clplot: \e[91merror: \e[0mWidth can only be set once" << endl;
                 return 1;
             }
 
@@ -320,7 +320,7 @@ int main(int argc, char *argv[]) {
                 chartWidth = stoi(argv[i + 1]);
             }
             else {
-                cout << "chart: \e[91merror: \e[0mThe width must be an integer number of rows between 8 and the terminal width, " << cols << "." << endl;
+                cout << "clplot: \e[91merror: \e[0mThe width must be an integer number of rows between 8 and the terminal width, " << cols << "." << endl;
                 return 1;
             }
             
@@ -328,7 +328,7 @@ int main(int argc, char *argv[]) {
         }
         else if (argv[i] == string("-p") || argv[i] == string("--position")) {
             if (posSet) {
-                cout << "chart: \e[91merror: \e[0mPosition can only be set once" << endl;
+                cout << "clplot: \e[91merror: \e[0mPosition can only be set once" << endl;
                 return 1;
             }
 
@@ -350,7 +350,7 @@ int main(int argc, char *argv[]) {
 
             }
             else {
-                cout << "chart: \e[91merror: \e[0m\"\e[93m" << argv[i+1] << "\e[0m\" is an invalid position. Position must in the format \"\e[93mx,y\e[0m\"." << endl;
+                cout << "clplot: \e[91merror: \e[0m\"\e[93m" << argv[i+1] << "\e[0m\" is an invalid position. Position must in the format \"\e[93mx,y\e[0m\"." << endl;
                 return 1;
             }
             
@@ -363,7 +363,7 @@ int main(int argc, char *argv[]) {
         else  {
             vector<string> args = { "-d", "-t", "-c", "-h", "-w", "-p", "--data", "--type", "--color", "--height", "--width", "--position" };
             if (!( find(args.begin(), args.end(), argv[i - 1]) != args.end() )) {
-                cout << "chart: \e[91merror: \e[0m\"\e[33m" << argv[i] << "\e[0m\" is not a recognized argument.\nArguments and values must be separated by spaces." << endl;
+                cout << "clplot: \e[91merror: \e[0m\"\e[33m" << argv[i] << "\e[0m\" is not a recognized argument.\nArguments and values must be separated by spaces.\n" << endl;
                 cout << usageScreen << endl;
                 return 1;
             }
@@ -383,13 +383,13 @@ int main(int argc, char *argv[]) {
             dataCheck(dataStr);
         }
         else {
-            cout << "chart: \e[91merror: \e[0mData must be passed to chart with the -d flag. See the readme for more information." << endl;
+            cout << "clplot: \e[91merror: \e[0mData must be passed to chart with the -d flag or with stdin. See the readme for more information." << endl;
             return 1;        
         }
     }
 
     if ( areachart && chartType != "line" ) {
-        cout << "chart: \e[91merror: \e[0mThe \e[93marea\e[0m chart option can only be used with the \e[93mline\e[0m chart type. \nUse \e[93m-t 'line'\e[0m instead of \e[93m-t '" << chartType << "'\e[0m." << endl;
+        cout << "clplot: \e[91merror: \e[0mThe \e[93marea\e[0m chart option can only be used with the \e[93mline\e[0m chart type. \nUse \e[93m-t 'line'\e[0m instead of \e[93m-t '" << chartType << "'\e[0m." << endl;
     }
 
 
@@ -409,13 +409,17 @@ int main(int argc, char *argv[]) {
         chart.dataDraw();
 
         if ( !sparkline ) {
-            // chart.label();
+            chart.label();
         } 
 
-        chart.draw(lines,cols);
+        chart.draw();
     }
     else if ( chartType == "bar" ) {
-        Barchart chart;
+        Barchart chart(chartType, dataStr, lines, cols, color);
+
+        chart.winSet(chartHeight, chartWidth, posX, posY);
+        chart.dataDraw();
+        chart.draw();
     }
 
     
