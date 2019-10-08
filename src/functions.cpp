@@ -6,9 +6,52 @@ using namespace std;
 
 
 // linechart constructor
-Linechart::Linechart(string newType, string newData, int lines, int cols, string newColor, bool areachart) {
-    // add area chart
+Linechart::Linechart(string newType, string newData, int lines, int cols, string newColor, bool areachart){
+// add area chart
     area = areachart;
+    // add chart type
+    type = newType;
+
+    // add chart data
+    int size = 0; 
+    while (newData[size] != '\0') { 
+        ++size; 
+    } 
+
+    string newStrData = newData.substr(1, size - 2);
+    size = size - 2;
+
+    int iterCount = (size + 1);
+        
+    string delimiter = ",";
+    size_t pos = 0;
+    string token;
+
+    int dataNum = 0;
+    while ((pos = newStrData.find(delimiter)) != string::npos) {
+        token = newStrData.substr(0, pos);
+
+        string::size_type sz;
+        float addFloat = stof(token, &sz);
+        data.push_back(addFloat);
+
+        newStrData.erase(0, pos + delimiter.length());
+        dataNum++;
+    }
+
+    dataNum++;
+    string::size_type st;
+    float addFloatEnd = stof(newStrData, &st);
+    data.push_back(addFloatEnd);
+
+    height = lines;
+    width = cols;
+
+    // add chart color
+    color = newColor;
+};
+
+Barchart::Barchart(string newType, string newData, int lines, int cols, string newColor) {
     // add chart type
     type = newType;
 
@@ -172,12 +215,12 @@ void Chart::winSet(int chartheight, int chartwidth, int positionX, int positionY
     }
 }
 
-void Chart::draw(int termHeight, int termWidth) {
+void Chart::draw() {
     //===================
     // Print the window
     //===================
     
-    for ( int j = 0; j < termHeight; j++ ) {
+    for ( int j = 0; j < height; j++ ) {
         for ( int k = 0; k < chartCharWidth + posX; k++ ) {
             cout << window[j][k];
         }
@@ -236,9 +279,6 @@ void Linechart::drawChar(int coordX, int coordY, string content, string color) {
     }
 }
 
-void Barchart::dataDraw() {
-
-}
 
 vector<string> Linechart::pattern(vector<float> steps) {
     vector<string> returnVec;
@@ -386,7 +426,13 @@ void Linechart::label() {
     float min =  *( min_element( data.begin(), data.end() ) );
     float max =  *( max_element( data.begin(), data.end() ) );
     float range = ( max - min );
-    float horSteps = (chartCharWidth - 3) / (data.size() - 1);
+    float horSteps = (float)(chartCharWidth - 3) / (float)(data.size() - 1);
+    cout << "showpoint: " << horSteps << endl;
+
+    if ( horSteps < 1 ) {
+        cout << "There is more data than the width of the chart. We should handle this?" << endl;
+    }
+    
     float verStepsChart = (Chart::chartCharHeight - 3) / range;
 
     float newRange = (range - 1) / verStepsChart;
@@ -403,7 +449,7 @@ void Linechart::label() {
         ss << label;
         string s(ss.str());
 
-        drawChar(0,i,s,"\e[31m");
+        // drawChar(0,i,s,"\e[31m");
 
         x++;
     }
@@ -449,11 +495,9 @@ void Linechart::dataDraw() {
     float min =  *( min_element( data.begin(), data.end() ) );
     float max =  *( max_element( data.begin(), data.end() ) );
     float range = ( max - min );
-
-    float horSteps = (chartCharWidth - 3) / (data.size() - 1);
+    float horSteps = (float)(chartCharWidth - 3) / (float)(data.size() - 1);
     float verStepsData = range / (chartCharHeight - 3);
     float verStepsChart = (chartCharHeight - 3) / range;
-
     float currentCoord[2];
     float charCoord[2];
 
@@ -526,7 +570,7 @@ void Linechart::dataDraw() {
             }
             else {
                 charCoord[1]++;
-                drawChar(charCoord[0], charCoord[1], chosenchars[4], color);
+                drawChar(charCoord[0], charCoord[1], chosenchars[6], color);
             }
         }
         else if ( pattern[i] == "down" ) {
@@ -552,4 +596,106 @@ void Linechart::dataDraw() {
         drawChar(charCoord[0], charCoord[1], chosenchars[0], color);
     }
 
+}
+
+
+// BAR CHART METHODS
+
+void Barchart::drawChar(int coordX, int coordY, string content, string color) {
+    coordX--;
+    coordY--;
+
+    int bl[2];
+
+    bl[1] = posX + 1; 
+    bl[0] = posY + chartCharHeight - 2;
+
+    int coord[2] = {bl[0] - coordY, bl[1] + coordX};
+
+    // cout << "Adding " << content << " at " << coord[1] << ", " << coord[0] << endl;
+    // cout << "window size: " << window.size() << ", " << window[0].size() << endl;
+
+    if ( coord[0] < 0 ) {
+        // cout << "Something went wrong" << endl;
+    }
+    else {
+        window[coord[0]][coord[1]] = color + content + "\e[0m";
+    }
+}
+
+void Barchart::dataDraw() {
+    float min =  *( min_element( data.begin(), data.end() ) );
+    float max =  *( max_element( data.begin(), data.end() ) );
+    float range = ( max - min );
+    float horSteps = (float)(chartCharWidth - 3) / (float)(data.size());
+    float verStepsData = range / (chartCharHeight - 3);
+    float verStepsChart = (chartCharHeight - 3) / range;
+
+    int endPadding;
+    int widthPadding;
+    int barWidth = floor(horSteps);
+    int arbitraryLimit = 4;
+    int secondArbitraryLimit = 8;
+
+    int extra = (chartCharWidth - 2) - (floor(horSteps) * data.size()); // may need to be -3 instead of -2
+    
+    vector<int> heights;
+    for ( int i = 0; i < data.size(); i++ ) {
+        heights.push_back(round(((data[i] - min) / range) * (chartCharHeight - 5) + 2));
+    }
+
+    if ( extra >= data.size() - 1) {
+        // all good, may be able to add padding
+        if ( floor(horSteps) > arbitraryLimit ) {
+            // we can add additional padding to the ends
+            barWidth -= 2;
+            endPadding = 1;
+            if ( barWidth > secondArbitraryLimit ) {
+                widthPadding = 4;
+                barWidth -= 4;
+                // we should make the above test more scientific:
+                //      if the ba
+
+                // we can padd the insides too;
+                // here's how much we can pad:
+                
+            }
+        }
+        else {
+            endPadding = 0;
+            widthPadding = 0;
+            // the bars are too small to pad it
+        }
+    }
+    else {
+        endPadding = 0;
+        widthPadding = 1;
+        //loop to make bars smaller 
+        barWidth = 1;
+        // we have a problem, need to make bars smaller to allow for bar inside padding
+
+    }
+
+    cout << "the bars have " << endPadding << " end padding.\n";
+    cout << "the bars are " << barWidth << " wide.\n";
+    cout << "the bars have " << widthPadding << " padding.\n";
+
+    cout << "Scale: " << min << max << endl;
+    int curCoord[2] = { 1 + endPadding, 1 };
+
+    for ( int x = 0; x < data.size(); x++ ) {
+        for ( int j = 0; j < barWidth; j++ ) {
+            for ( int i = heights[x]; i >= 0; i-- ){
+                curCoord[1] = i;
+                if ( i != 0 ) {
+                    drawChar(curCoord[0],curCoord[1],"█",color);
+                }
+                else {
+                    drawChar(curCoord[0],curCoord[1],"▀",color);
+                }
+            }
+            curCoord[0] += 1;
+        }
+        curCoord[0] += widthPadding;
+    }
 }
