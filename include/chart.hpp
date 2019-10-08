@@ -35,7 +35,7 @@ class Chart {
         void move();
 
         // drawing methods
-        void draw(int termHeight, int termWidth);
+        void draw();
         string getChar(int coordX, int coordY);
 };
 
@@ -43,10 +43,10 @@ class Chart {
 class Linechart : public Chart {
 
     // various line characters
-    vector<string> chars = { "╭", "╮", "╰", "╯", "│", "─" };
-    vector<string> charsBold = { "╔", "╗", "╚", "╝", "║", "═" };
-    vector<string> charsArea = { "▗", "▖", "▙", "▟" , "▐" , "▄" };
-    vector<string> sharpChars = { "┌", "┐", "└", "┘", "│", "─" };
+    vector<string> chars = { "╭", "╮", "╰", "╯", "│", "─", "│"};
+    vector<string> charsBold = { "╔", "╗", "╚", "╝", "║", "═", "║" };
+    vector<string> charsArea = { "▗", "▖", "▙", "▟" , "▌" , "▄", "▐" };
+    vector<string> sharpChars = { "┌", "┐", "└", "┘", "│", "─", "│" };
     
     bool area;
     
@@ -63,8 +63,11 @@ class Linechart : public Chart {
 
 class Barchart : public Chart {
     vector<string> chars = { "▁", "▂" "▃", "▄", "▅", "▆", "▇", "█" };
-    
+
     public:
+        Barchart(string newType, string newData, int lines, int cols, string newColor);
+
         void label();
         void dataDraw();
+        void drawChar(int coordX, int coordY, string content, string color);
 };
