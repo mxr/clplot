@@ -2,6 +2,8 @@
 #include <iostream>
 #include <math.h>
 #include <sstream>
+#include <algorithm>
+
 using namespace std;
 
 
@@ -632,7 +634,7 @@ void Barchart::dataDraw() {
     float verStepsChart = (chartCharHeight - 3) / range;
 
     int endPadding;
-    int widthPadding;
+    int widthPadding = 3;
     int barWidth = floor(horSteps);
     int arbitraryLimit = 4;
     int secondArbitraryLimit = 8;
