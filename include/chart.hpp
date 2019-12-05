@@ -1,5 +1,16 @@
 #include <string>
 #include <vector>
+#include <iostream>
+#include <sys/ioctl.h>
+#include <unistd.h>
+#include <sstream> 
+#include <map>
+#include <string.h>
+#include <string>
+#include <ctype.h>
+#include <cstdlib>  
+#include <random>
+#include <algorithm>
 
 using namespace std;
     
