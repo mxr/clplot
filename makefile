@@ -5,20 +5,11 @@ chartCompiled = bin/clplot
 newpath = ""
 BINDIR = bin
 
-# ifneq ("$(wildcard $(chartCompiled))","")
-# all: exit
-# else
 all: compile
-# endif
-
-# exit:
-# 	@printf "Compiling...\n"
-# 	@sleep .3
-# 	@printf "\x1b[31mProgram already compiled, exiting... see 'make install' to move the binaries\e[0m\n"
 
 compile:
 	@echo "Compiling..."
-	@${CC} -std=c++11 src/chartRunner.cpp src/functions.cpp -o ${chartCompiled}
+	@${CC} -std=c++11 src/clplot.cpp src/args.cpp src/line.cpp src/bar.cpp -o ${chartCompiled}
 	@printf "\e[32mCompiled successfuly!\e[0m\n"
 	@sleep .4
 	@printf "To install run '\e[31mmake install\e[0m'\n"
@@ -30,7 +21,7 @@ install:
 
 silentcompile:
 	@mkdir -p $(BINDIR)
-	@${CC} -std=c++11 src/chartRunner.cpp src/functions.cpp -o ${chartCompiled}
+	@${CC} -std=c++11 src/clplot.cpp src/args.cpp src/line.cpp src/bar.cpp -o ${chartCompiled}
 
 brewinstall:
 	@mkdir -p ${newpath}/bin
